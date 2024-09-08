@@ -1,10 +1,9 @@
+import 'package:finalproject/pages/Fill%20Profile.dart';
 import 'package:flutter/material.dart';
-
-import 'pages/Register.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: Register(),
+    home: Fill_Profile(),
   ));
 }

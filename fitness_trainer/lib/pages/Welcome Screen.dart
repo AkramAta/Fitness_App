@@ -1,7 +1,9 @@
 import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+
 import '../Component/Title.dart';
+
 class WelcomeScreen extends StatelessWidget {
   // For padding Controls
   late double padding_Values = 20;
@@ -17,7 +19,7 @@ class WelcomeScreen extends StatelessWidget {
           width: double.infinity,
           decoration: const BoxDecoration(
             image: DecorationImage(
-              fit: BoxFit.fill,
+              fit: BoxFit.cover,
               image: AssetImage("Assets/Image/bg.jpg"),
             ),
           ),
