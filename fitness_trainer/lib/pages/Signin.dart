@@ -113,10 +113,15 @@ class Signin extends StatelessWidget {
               ],
               child: Padding(
                 padding: EdgeInsets.all(20),
-                child: buttons(text: "sign in with password", action: () {}),
+                child: buttons(
+                    text: "sign in with account",
+                    Font_size: 20,
+                    Pad_Left_Right: 80,
+                    Pad_Top_Bottom: 15,
+                    action: () {}),
               ),
             ),
-            SizedBox(height: 120),
+            SizedBox(height: 20),
             Row(mainAxisAlignment: MainAxisAlignment.center, children: [
               paragraph(
                   text: "Don't have an account ? ",

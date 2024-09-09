@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
 
-import 'Colors.dart'; // Assuming 'Purple' and 'White' are defined in Colors.dart
+import 'Colors.dart';
 
 Widget buttons({
   required String text,
   required Function() action,
-  Color colour = const Color(0xff6C63FF), // Default color
+  Color colour = const Color(0xff6C63FF),
+  double Font_size = 30,
+  double Pad_Left_Right = 30,
+  double Pad_Top_Bottom = 15,
 }) {
   return TextButton(
     style: ButtonStyle(
@@ -17,14 +20,18 @@ Widget buttons({
       foregroundColor: MaterialStateProperty.all(Color(int.parse(White))),
       backgroundColor: MaterialStateProperty.all(colour),
       padding: MaterialStateProperty.all(
-        EdgeInsets.only(left: 20, right: 20, top: 10, bottom: 10),
+        EdgeInsets.only(
+            left: Pad_Left_Right,
+            right: Pad_Left_Right,
+            top: Pad_Top_Bottom,
+            bottom: Pad_Top_Bottom),
       ),
     ),
     onPressed: action,
     child: Text(
       text,
       style: TextStyle(
-        fontSize: 30,
+        fontSize: Font_size,
         fontFamily: 'lora',
         fontWeight: FontWeight.w500,
       ),

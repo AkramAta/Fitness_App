@@ -1,7 +1,8 @@
 import 'package:finalproject/Component/Title.dart';
 import 'package:flutter/material.dart';
-import '../Component/Colors.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+
+import '../Component/Colors.dart';
 
 class Register extends StatefulWidget {
   const Register({super.key});
@@ -16,7 +17,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
   late TextEditingController passwordController;
   late bool _obscureText = true;
   late bool? isChecked = false;
-  late List Delays = [250,500, 750];
+  late List Delays = [250, 500, 750];
 // padding control
   late double Padding_values = 10;
   // List of Logos
@@ -234,9 +235,8 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                           ),
                           effects: [
                             FadeEffect(
-                              delay: Duration(milliseconds:Delays[i]),
-                              duration: Duration(seconds:3)
-                              ),
+                                delay: Duration(milliseconds: Delays[i]),
+                                duration: Duration(seconds: 3)),
                           ],
                         )
                     ],

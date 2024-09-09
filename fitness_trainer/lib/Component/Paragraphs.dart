@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 
-Widget paragraph({required String text, Color color = Colors.white}) {
+Widget paragraph(
+    {double Font_size = 10, required String text, Color color = Colors.white}) {
   return Text(
     text,
     style: TextStyle(
-      fontSize: 15,
+      fontWeight: FontWeight.w300,
+      fontFamily: "lora",
+      fontSize: Font_size,
       color: color,
     ),
   );

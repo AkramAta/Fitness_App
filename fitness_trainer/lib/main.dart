@@ -1,9 +1,9 @@
-import 'package:finalproject/pages/Fill%20Profile.dart';
+import 'package:finalproject/pages/Tell_us.dart';
 import 'package:flutter/material.dart';
 
 void main() {
   runApp(MaterialApp(
     debugShowCheckedModeBanner: false,
-    home: Fill_Profile(),
+    home: TellUs(),
   ));
 }
