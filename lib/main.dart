@@ -1,5 +1,6 @@
 import 'package:finalproject/pages/Age_picker.dart';
 import 'package:finalproject/pages/Fill%20Profile.dart';
+import 'package:finalproject/pages/Goal_Screen.dart';
 import 'package:finalproject/pages/Login.dart';
 import 'package:finalproject/pages/Register.dart';
 import 'package:flutter/material.dart';
@@ -14,7 +15,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: PhysicalActivity(),
+      home: GoalScreen(),
     );
   }
 }
