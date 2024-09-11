@@ -1,4 +1,5 @@
 import 'package:finalproject/Component/Paragraphs.dart';
+import 'package:finalproject/pages/Get-Started.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -58,13 +59,34 @@ class WelcomeScreen extends StatelessWidget {
                   ],
                   child: titles(txt: Titles[0].toUpperCase()),
                 ),
-                Animate(
+                Row(
+                  children: [
+                    Animate(
                   effects: const [
                     FadeEffect(
                         delay: Duration(milliseconds: 500),
                         duration: Duration(seconds: 2)),
                   ],
                   child: titles(txt: Titles[1].toUpperCase()),
+                ),
+                    SizedBox(width: 150),
+
+                    Animate(
+                      effects: const [
+                        FadeEffect(
+                            delay: Duration(milliseconds: 500),
+                            duration: Duration(seconds: 2)),
+                      ],
+                      child: IconButton(
+                        icon: Icon(Icons.chevron_right),
+                        color: Colors.white,
+                        iconSize: 50,
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Get_Started()));
+                        },
+                      ),
+                    )
+                  ]
                 ),
                 Animate(
                     effects: const [

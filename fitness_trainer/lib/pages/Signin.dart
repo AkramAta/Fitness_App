@@ -1,6 +1,7 @@
 import 'package:finalproject/Component/Colors.dart';
 import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:finalproject/Component/Title.dart';
+import 'package:finalproject/pages/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 
@@ -118,7 +119,11 @@ class Signin extends StatelessWidget {
                     Font_size: 20,
                     Pad_Left_Right: 80,
                     Pad_Top_Bottom: 15,
-                    action: () {}),
+                    action: () {
+                      Navigator.push(
+                          context,  MaterialPageRoute(builder: (context)=>Register()),
+                        );
+                    }),
               ),
             ),
             SizedBox(height: 20),

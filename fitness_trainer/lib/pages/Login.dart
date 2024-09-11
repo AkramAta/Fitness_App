@@ -168,7 +168,10 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         color: Color(int.parse(White)),
                       ),
                     ),
-                    onPressed: () {},
+                    onPressed: () {
+                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                      Navigator.pushNamed(context, "Home");
+                    },
                   ),
                   const SizedBox(
                     height: 22,
