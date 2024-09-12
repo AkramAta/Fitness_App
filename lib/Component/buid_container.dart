@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-
 // Define a function to create a Container with specified properties
 Widget buildContainer(
-    {required Widget child,
+    {
+      required Widget child,
     required Color backgroundColor,
-    double padding_All_direction = 20}) {
+    double padding_All_direction = 0
+    }) {
   return Container(
     padding: EdgeInsets.all(padding_All_direction),
     child: child,

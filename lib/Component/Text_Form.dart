@@ -1,39 +1,43 @@
 import 'package:flutter/material.dart';
-
 Widget buildTextFormField({
+  required Function Changed(String),
+  required  Function() Tapped ,
+  required obSecured_text ,
   required TextEditingController controller,
-  String hintText = "Enter text",
-  String labelText = "Label",
-  IconData suffixIcon = Icons.mail,
-  Color iconColor = Colors.white10, // Removed const
-  Color borderColor = Colors.grey, // Removed const
-  Color focusedBorderColor = Colors.deepPurple, // Removed const
-  Color textColor = Colors.white, // Removed const
-  Color fillColor = Colors.black, // Removed const
-  EdgeInsets contentPadding = const EdgeInsets.all(20), // This can stay const
+  required Widget suffixIcon ,
+  required String hintText ,
+  required String labelText,
+  Color iconColor = Colors.white10,
+  Color borderColor = Colors.grey,
+  Color focusedBorderColor = Colors.deepPurple,
+  Color textColor = Colors.white,
+  Color fillColor = Colors.black,
+  EdgeInsets contentPadding = const EdgeInsets.all(20),
   double fontSize = 20,
+  double borderWidth = 1,
+  Color labelColor = Colors.white, // Direct Color instead of String
 }) {
   return TextFormField(
     controller: controller,
+    obscureText: obSecured_text,
     style: TextStyle(fontSize: fontSize, color: textColor),
     decoration: InputDecoration(
-      suffixIcon: Icon(suffixIcon),
+      suffixIcon: suffixIcon,
       suffixIconColor: iconColor,
       filled: true,
-      labelStyle: TextStyle(color: Colors.grey),
+      labelStyle: TextStyle(color: labelColor),
       fillColor: fillColor,
       enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 2, color: borderColor),
+        borderSide: BorderSide(width: borderWidth, color: borderColor),
       ),
       focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: 2, color: focusedBorderColor),
+        borderSide: BorderSide(width: borderWidth, color: focusedBorderColor),
       ),
       hintText: hintText,
       contentPadding: contentPadding,
       labelText: labelText,
     ),
-    onTap: () {
-      // Perform any additional actions when tapped
-    },
+    onTap: Tapped,
+    onChanged:Changed
   );
 }
