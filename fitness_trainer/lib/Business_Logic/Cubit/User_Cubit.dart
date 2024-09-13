@@ -1,7 +1,7 @@
 
 
 import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
-import 'package:finalproject/Component/Colors.dart';
+
 import 'package:finalproject/Services/FireBase_Service.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -25,6 +25,7 @@ class UserCubit extends Cubit<UserState> {
   late List<String> selectedGoals = [];
   late String currentBorderColor = "";
   late bool obscureText= true;
+  late bool obscureText2= true;
   late bool? isChecked = false;
   
 
@@ -139,6 +140,11 @@ class UserCubit extends Cubit<UserState> {
       obscureText = !obscureText;
       emit(UserPassword());
   }
+  void toggleVisibility2() {
+    
+      obscureText2 = !obscureText2;
+      emit(UserPassword());
+  }
 
 
   void Check(bool newisChecked) {
@@ -146,6 +152,9 @@ class UserCubit extends Cubit<UserState> {
       isChecked = newisChecked;
        emit(UserPassword());
   }
+
+
+  
   
   }
 

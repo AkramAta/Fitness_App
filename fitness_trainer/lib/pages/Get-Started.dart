@@ -1,5 +1,6 @@
 import 'package:finalproject/Component/Button.dart';
 import 'package:finalproject/pages/Fill%20Profile.dart';
+import 'package:finalproject/pages/Login.dart';
 import 'package:flutter/material.dart';
 import 'package:smooth_page_indicator/smooth_page_indicator.dart';
 
@@ -106,7 +107,7 @@ class Get_Started extends StatelessWidget {
                             titles(txt: "with us"),
                             const SizedBox(height: 20),
                             buttons(text: "Next", action: () {
-                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Fill_Profile()));
+                              Navigator.push(context, MaterialPageRoute(builder: (context)=>Login()));
                             })
                           ],
                         ),

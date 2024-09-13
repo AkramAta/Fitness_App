@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 Widget buildTextFormField({
-  required Function Changed(String),
-  required  Function() Tapped ,
+   Function Changed(String)?,
+  Function()? Tapped ,
   required obSecured_text ,
   required TextEditingController controller,
   required Widget suffixIcon ,

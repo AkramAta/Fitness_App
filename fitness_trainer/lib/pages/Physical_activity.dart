@@ -3,6 +3,7 @@ import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 import 'package:finalproject/Component/Button.dart';
 import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
 import 'package:finalproject/Component/buid_container.dart';
+import 'package:finalproject/pages/Fill%20Profile.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -130,7 +131,7 @@ class PhysicalActivity extends StatelessWidget {
                     buttons(
                         text: "Continue",
                         action: () {
-                          // Navigator.push(context, MaterialPageRoute(builder: (context) => Home));
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile()));
                         },
                         Pad_Left_Right: 30,
                         Font_size: 20),

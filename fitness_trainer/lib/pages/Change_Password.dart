@@ -1,20 +1,31 @@
-import 'package:finalproject/Component/Button.dart';
+import 'package:finalproject/Business_Logic/Cubit/OTP_Cubit.dart';
+import 'package:finalproject/Business_Logic/Cubit/Otp_State.dart';
 import 'package:flutter/material.dart';
-import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
-import 'package:finalproject/Component/buid_container.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../Business_Logic/Cubit/User_Cubit.dart';
+
+import '../Component/Button.dart';
+import '../Component/SizedBox_for%20Gapping.dart';
+import '../Component/buid_container.dart';
 import '../Component/Colors.dart';
 import '../Component/Text_Form.dart';
 import '../Component/Title.dart';
 
-class ChangePassword extends StatefulWidget {
-  @override
-  State<ChangePassword> createState() => _ChangePasswordState();
-}
-class _ChangePasswordState extends State<ChangePassword> {
-  late TextEditingController currentPassword = TextEditingController();
-  late TextEditingController newPassword = TextEditingController();
-  late bool securedText = true;
-  late bool securedText2 = true;
+class ChangePassword extends StatelessWidget {
+  final String email;
+  final String oldPassword;
+  final dynamic userdic;
+
+  // Controller for the new password field
+  final TextEditingController newPasswordController = TextEditingController();
+
+  ChangePassword({
+    required this.email,
+    required this.oldPassword,
+    required this.userdic,
+  });
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -35,80 +46,66 @@ class _ChangePasswordState extends State<ChangePassword> {
           },
         ),
       ),
-      body: buildContainer(
-        padding_All_direction: 20,
-        backgroundColor: Color(int.parse(Black)),
-        child: ListView(
-          scrollDirection: Axis.vertical,
-          children: [
-            Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+      body: BlocBuilder<OtpCubit, OtpState>(
+        builder: (context, state) {
+          final userCubit = context.read<UserCubit>();
+
+          return buildContainer(
+            padding_All_direction: 20,
+            backgroundColor: Color(int.parse(Black)),
+            child: ListView(
+              scrollDirection: Axis.vertical,
               children: [
-                Image(image: AssetImage("Assets/Image/Create-password.png")),
-                Sized_Gap(Height: 20),
-                buildTextFormField(
-                  obSecured_text: securedText,
-                  controller: currentPassword,
-                  focusedBorderColor: Color(int.parse(Purple)),
-                  borderColor: Color(int.parse(White)),
-                  contentPadding: EdgeInsets.all(25),
-                  fillColor: Colors.transparent,
-                  labelText: "Enter your current password",
-                  labelColor: Color(int.parse(White)),
-                  hintText: "***********",
-                  textColor: Color(int.parse(White)),
-                  iconColor: Color(int.parse(White)),
-                  suffixIcon: IconButton(
-                    icon: Icon(securedText ? Icons.visibility : Icons.visibility_off,),
-                    onPressed: () {
-                      setState(() {securedText = !securedText;});
-                    },
-                  ),
-                  Changed: (v) {
-                    return v;
-                  },
-                  Tapped: () {
-                  },
-                ),
-                Sized_Gap(Height: 20),
-                buildTextFormField(
-                  obSecured_text: securedText2,
-                  controller: newPassword,
-                  focusedBorderColor: Color(int.parse(Purple)),
-                  borderColor: Color(int.parse(White)),
-                  contentPadding: EdgeInsets.all(25),
-                  fillColor: Colors.transparent,
-                  labelText: "Enter your New password",
-                  labelColor: Color(int.parse(White)),
-                  hintText: "***********",
-                  textColor: Color(int.parse(White)),
-                  iconColor: Color(int.parse(White)),
-                  suffixIcon: IconButton(
-                    icon: Icon(
-                      securedText2 ? Icons.visibility : Icons.visibility_off,
+                Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    const Image(
+                      image: AssetImage("Assets/Image/Create-password.png"),
                     ),
-                    onPressed: () {
-                      setState(()
-                      {securedText2 = !securedText2;
-                      });
-                    },
-                  ),
-                  Changed: (v) {
-                    return v;
+                    Sized_Gap(Height: 20),
+                    buildTextFormField(
+                      obSecured_text: userCubit.obscureText2,
+                      controller: newPasswordController,
+                      focusedBorderColor: Color(int.parse(Purple)),
+                      borderColor: Color(int.parse(White)),
+                      contentPadding: const EdgeInsets.all(25),
+                      fillColor: Colors.transparent,
+                      labelText: "Enter your New password",
+                      labelColor: Color(int.parse(White)),
+                      hintText: "***********",
+                      textColor: Color(int.parse(White)),
+                      iconColor: Color(int.parse(White)),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          BlocProvider.of<UserCubit>(context).obscureText2
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          color: Color(int.parse(White)),
+                        ),
+                        onPressed: () {
+                          userCubit.toggleVisibility2();
+                        },
+                      ),
+                    ),
+                  ],
+                ),
+                 Sized_Gap(Height: 100),
+                buttons(
+                  text: "Continue",
+                  action: () async {
+                    await BlocProvider.of<OtpCubit>(context).reauthenticateAndChangePassword(
+                      email: email,
+                      oldPassword: oldPassword,
+                      newPassword: newPasswordController.text,
+                      userdic: userdic,
+                      context: context,
+                    );
                   },
-                  Tapped: () {},
                 ),
               ],
             ),
-            Sized_Gap(
-                Height:
-                100
-            ),
-            buttons(text:
-            "Countiune",
-                action: (){})
-          ],
-        ),
+          );
+        },
       ),
     );
   }

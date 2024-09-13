@@ -1,7 +1,11 @@
 import 'package:finalproject/Business_Logic/Cubit/User_Cubit.dart';
 import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 import 'package:finalproject/Component/Title.dart';
+import 'package:finalproject/Services/FireBase_Service.dart';
+import 'package:finalproject/pages/Forget_pass.dart';
 import 'package:finalproject/pages/Register.dart';
+import 'package:finalproject/pages/Tell_us.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -15,6 +19,8 @@ class Login extends StatelessWidget {
     "Assets/Image/Google.png",
     "Assets/Image/Apple.png"
   ];
+  String spe ="";
+  List listtoken=[];
 
   @override
   Widget build(BuildContext context) {
@@ -101,7 +107,9 @@ class Login extends StatelessWidget {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => ForgotPasswordScreen()));
+                    },
                     child: Text(
                       "Forgot Password?",
                       style: TextStyle(
@@ -153,7 +161,8 @@ class Login extends StatelessWidget {
                       ),
                     ),
                     onPressed: () {
-                      // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                       loginUser(emailController.text,passwordController.text,context,listtoken,spe);
+                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TellUs()));
                     },
                   ),
                   const SizedBox(height: 22),
@@ -206,6 +215,9 @@ class Login extends StatelessWidget {
                           // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
                         },
                         child: ListTile(
+                          onTap: () {
+                            signInWithGoogle();
+                          },
                           title: Text(
                             "Continue with Google",
                             style: TextStyle(
@@ -234,9 +246,14 @@ class Login extends StatelessWidget {
                         onPressed: () {
                           Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                         },
-                        child: Text(
-                          "Sign up",
+                        child: TextButton(
+                          child: Text(
+                            "Sign up",
                           style: TextStyle(color: Color(int.parse(Purple))),
+                          ),
+                          onPressed: () {
+                            Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                          },
                         ),
                       ),
                     ],
