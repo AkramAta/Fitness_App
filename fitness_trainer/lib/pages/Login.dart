@@ -1,81 +1,57 @@
+import 'package:finalproject/Business_Logic/Cubit/User_Cubit.dart';
+import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 import 'package:finalproject/Component/Title.dart';
+import 'package:finalproject/pages/Register.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_animate/flutter_animate.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../Component/Colors.dart';
 
-class Login extends StatefulWidget {
-  @override
-  State<Login> createState() => _LoginState();
-}
-
-class _LoginState extends State<Login> with TickerProviderStateMixin {
-  late final AnimationController anime_controller;
-  late final Animation<double> _animation;
-  late TextEditingController emailController;
-  late TextEditingController passwordController;
-  late bool _obscureText = true;
-  late bool? isChecked = false;
-  late List Delays = [250, 500, 750];
-// padding control
-  late double Padding_values = 10;
-  // List of Logos
-  late List<String> Logos = [
+class Login extends StatelessWidget {
+  final List Delays = [250, 500, 750];
+  final double Padding_values = 10;
+  final List<String> Logos = [
     "Assets/Image/Facebook.png",
     "Assets/Image/Google.png",
     "Assets/Image/Apple.png"
   ];
-  @override
-  void initState() {
-    super.initState();
-    emailController = TextEditingController();
-    passwordController = TextEditingController();
-    anime_controller = AnimationController(
-      duration: const Duration(seconds: 5),
-      vsync: this,
-    );
-    _animation =
-        CurvedAnimation(parent: anime_controller, curve: Curves.easeIn);
-    // Run the animation once
-    anime_controller.forward();
-  }
-
-  @override
-  void dispose() {
-    anime_controller.dispose();
-    super.dispose();
-  }
-
-  void _toggleVisibility() {
-    setState(() {
-      _obscureText = !_obscureText;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          backgroundColor: Color(int.parse(Black)),
-        ),
-        body: Container(
-          width: double.infinity,
-          height: double.infinity,
-          color: Color(int.parse(Black)),
-          child: SingleChildScrollView(
-            scrollDirection: Axis.vertical,
-            child: Column(
+    final emailController = TextEditingController();
+    final passwordController = TextEditingController();
+
+    return BlocBuilder<UserCubit, UserState>(
+      builder: (context, state) {
+        return Scaffold(
+          appBar: AppBar(
+            backgroundColor: Color(int.parse(Black)),
+          ),
+          body: Container(
+            width: double.infinity,
+            height: double.infinity,
+            color: Color(int.parse(Black)),
+            child: SingleChildScrollView(
+              scrollDirection: Axis.vertical,
+              child: Column(
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  FadeTransition(
-                      opacity: _animation,
-                      child: titles(
-                        txt: "login to your account",
-                      )),
+                  // Using AnimatedOpacity instead of FadeTransition
+                  AnimatedOpacity(
+                    opacity: 1.0, // Fully visible
+                    duration: const Duration(seconds: 3), // Duration of fade-in
+                    child: titles(
+                      Font_size: 30,
+                      txt: "Login to your account",
+                    ),
+                  ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: Padding_values, right: Padding_values, top: 40),
+                      left: Padding_values,
+                      right: Padding_values,
+                      top: 40,
+                    ),
                     child: TextFormField(
                       controller: emailController,
                       style: const TextStyle(color: Colors.white),
@@ -93,29 +69,29 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                  ), // for email
+                  ),
                   Padding(
                     padding: EdgeInsets.only(
-                        left: Padding_values,
-                        right: Padding_values,
-                        top: 40,
-                        bottom: 30),
+                      left: Padding_values,
+                      right: Padding_values,
+                      top: 20,
+                      bottom: 10,
+                    ),
                     child: TextFormField(
                       controller: passwordController,
-                      obscureText: _obscureText,
+                      obscureText: BlocProvider.of<UserCubit>(context).obscureText,
                       style: const TextStyle(color: Colors.white),
                       decoration: InputDecoration(
-                        hintText: "******",
                         labelStyle: const TextStyle(color: Colors.white),
                         contentPadding: const EdgeInsets.all(25),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _obscureText
-                                ? Icons.visibility
-                                : Icons.visibility_off,
+                            BlocProvider.of<UserCubit>(context).obscureText
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             color: Colors.white,
                           ),
-                          onPressed: _toggleVisibility,
+                          onPressed: BlocProvider.of<UserCubit>(context).toggleVisibility,
                         ),
                         labelText: "Enter your password",
                         border: const OutlineInputBorder(
@@ -123,41 +99,49 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                         ),
                       ),
                     ),
-                  ), // for password
+                  ),
+                  TextButton(
+                    onPressed: () {},
+                    child: Text(
+                      "Forgot Password?",
+                      style: TextStyle(
+                        color: Color(int.parse(Purple)),
+                        fontSize: 15,
+                      ),
+                    ),
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
                       Checkbox(
-                        value: isChecked,
+                        value: BlocProvider.of<UserCubit>(context).isChecked,
                         onChanged: (newBool) {
-                          setState(() {
-                            isChecked = newBool;
-                          });
+                          BlocProvider.of<UserCubit>(context).Check(newBool!);
                         },
                         activeColor: Color(int.parse(Purple)),
                         fillColor: WidgetStateProperty.all(Colors.transparent),
                         splashRadius: 15,
                       ),
-                      const SizedBox(
-                        width: 5,
-                      ),
                       const Text(
                         "Remember me",
                         style: TextStyle(
                           color: Colors.white,
-                          fontSize: 30,
+                          fontSize: 15,
                         ),
                       )
                     ],
-                  ), // For checkbox
+                  ),
                   const SizedBox(height: 15),
                   TextButton(
                     style: ButtonStyle(
-                      backgroundColor:
-                          MaterialStateProperty.all(Color(int.parse(Purple))),
+                      backgroundColor: MaterialStateProperty.all(Color(int.parse(Purple))),
                       padding: MaterialStateProperty.all(EdgeInsets.only(
-                          left: 150, right: 150, top: 10, bottom: 10)),
+                        left: 150,
+                        right: 150,
+                        top: 5,
+                        bottom: 5,
+                      )),
                     ),
                     child: Text(
                       "Login",
@@ -170,12 +154,9 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                     ),
                     onPressed: () {
                       // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
-                      Navigator.pushNamed(context, "Home");
                     },
                   ),
-                  const SizedBox(
-                    height: 22,
-                  ),
+                  const SizedBox(height: 22),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -183,81 +164,89 @@ class _LoginState extends State<Login> with TickerProviderStateMixin {
                       const SizedBox(
                         width: 100,
                         child: Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Divider(
-                              height: 30,
-                              thickness: 0.5,
-                              endIndent: 1,
-                              indent: 1,
-                            )),
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: Divider(
+                            height: 30,
+                            thickness: 0.5,
+                            endIndent: 1,
+                            indent: 1,
+                          ),
+                        ),
                       ),
                       Text(
-                        "or countiune with",
+                        "or continue with",
                         style: TextStyle(
-                            color: Color(int.parse(White)), fontSize: 15),
+                          color: Color(int.parse(White)),
+                          fontSize: 15,
+                        ),
                       ),
                       const SizedBox(
                         width: 100,
                         child: Padding(
-                            padding: EdgeInsets.only(left: 20, right: 20),
-                            child: Divider(
-                              height: 30,
-                              thickness: 0.5,
-                              endIndent: 1,
-                              indent: 1,
-                            )),
+                          padding: EdgeInsets.only(left: 20, right: 20),
+                          child: Divider(
+                            height: 30,
+                            thickness: 0.5,
+                            endIndent: 1,
+                            indent: 1,
+                          ),
+                        ),
                       )
                     ],
                   ),
-                  const SizedBox(height: 30),
+                  const SizedBox(height: 5),
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        for (int i = 0; i < Logos.length; i++)
-                          Animate(
-                            child: Container(
-                              width: 80,
-                              height: 85,
-                              padding: EdgeInsets.all(20),
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    width: 5, color: Color(int.parse(Black))),
-                                color: Color(0xff21242a),
-                              ),
-                              child: Image.asset(
-                                Logos[i],
-                                fit: BoxFit.fitWidth,
-                              ),
+                    child: Container(
+                      color: Colors.black,
+                      margin: EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 5),
+                      padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 50),
+                      child: InkWell(
+                        onTap: () {
+                          // Navigator.push(context, MaterialPageRoute(builder: (context)=>Home()));
+                        },
+                        child: ListTile(
+                          title: Text(
+                            "Continue with Google",
+                            style: TextStyle(
+                              color: Color(int.parse(White)),
+                              fontSize: 14,
                             ),
-                            effects: [
-                              FadeEffect(
-                                  delay: Duration(milliseconds: Delays[i]),
-                                  duration: Duration(seconds: 2)),
-                            ],
-                          )
-                      ],
+                          ),
+                          leading: CircleAvatar(
+                            backgroundColor: Colors.transparent,
+                            radius: 20,
+                            backgroundImage: AssetImage("Assets/Image/Google.png"),
+                          ),
+                        ),
+                      ),
                     ),
                   ),
-                  SizedBox(
-                    height: 30,
-                  ),
+                  const SizedBox(height: 15),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        "Don't have an account ? ",
+                        "Don't have an account? ",
                         style: TextStyle(color: Color(int.parse(Grayish))),
                       ),
-                      Text(
-                        "Sign up",
-                        style: TextStyle(color: Color(int.parse(Purple))),
+                      TextButton(
+                        onPressed: () {
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
+                        },
+                        child: Text(
+                          "Sign up",
+                          style: TextStyle(color: Color(int.parse(Purple))),
+                        ),
                       ),
                     ],
-                  )
-                ]),
+                  ),
+                ],
+              ),
+            ),
           ),
-        ));
+        );
+      },
+    );
   }
 }

@@ -24,7 +24,8 @@ class UserCubit extends Cubit<UserState> {
   late List<bool> isCheckedList = [];
   late List<String> selectedGoals = [];
   late String currentBorderColor = "";
-  
+  late bool obscureText= true;
+  late bool? isChecked = false;
   
 
  void updateAge(int newAge) {
@@ -125,25 +126,27 @@ class UserCubit extends Cubit<UserState> {
     emit(UserImage());
     addUser(image: image);
   }
+
+  updatePassword(String password){
+    userpassword = password; 
+    emit(UserPassword());
+    addUser(password: userpassword);
+  }
   
 
-  
-  
-
-
-  
-
-  // getAge(String age) {
-  //   emit(UserAge());
-  // }
-
-  getWeight(String weight) {
-    emit(UserWeight());
+  void toggleVisibility() {
+    
+      obscureText = !obscureText;
+      emit(UserPassword());
   }
 
-  getHeight(String height) {
-    emit(UserHeight());
+
+  void Check(bool newisChecked) {
+    
+      isChecked = newisChecked;
+       emit(UserPassword());
+  }
+  
   }
 
   
-  }

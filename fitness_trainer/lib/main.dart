@@ -1,6 +1,10 @@
 import 'package:finalproject/Business_Logic/Cubit/User_Cubit.dart';
 import 'package:finalproject/pages/Age_picker.dart';
+import 'package:finalproject/pages/ForgotPassword.dart';
 import 'package:finalproject/pages/Goal_Screen.dart';
+import 'package:finalproject/pages/Login.dart';
+import 'package:finalproject/pages/NewPasswordScreen.dart';
+import 'package:finalproject/pages/OTPscreen.dart';
 import 'package:finalproject/pages/Physical_activity.dart';
 import 'package:finalproject/pages/Tell_us.dart';
 import 'package:finalproject/pages/Welcome%20Screen.dart';
@@ -27,7 +31,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: TellUs(),
+        home:CreateNewPasswordScreen(),
       ),
     );
   }
