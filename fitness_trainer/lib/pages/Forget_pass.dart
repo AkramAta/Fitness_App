@@ -3,7 +3,6 @@ import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
 import 'package:finalproject/Component/buid_container.dart';
 import 'package:flutter/services.dart';
-import 'package:pinput/pinput.dart';
 import 'package:flutter/material.dart';
 import '../Component/Colors.dart';
 import '../Component/Title.dart';
