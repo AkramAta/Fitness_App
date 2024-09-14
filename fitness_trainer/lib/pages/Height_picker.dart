@@ -10,8 +10,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numberpicker/numberpicker.dart';
 import '../Component/Colors.dart';
+
 class HeightPicker extends StatelessWidget {
-  late int Intiat_value_Picker = 50;
+  late int Intiat_value_Picker = 50, height;
+  late String userid;
+
+  HeightPicker({required this.userid});
 
   late List<String> Paragraph = [
     "Height in centimeter , Don't worry you can always ",
@@ -49,36 +53,39 @@ class HeightPicker extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       NumberPicker(
-                        value: BlocProvider.of<UserCubit>(context).height,
-                        minValue: 0,
-                        maxValue: 300,
-                        axis: Axis.vertical,
-                        infiniteLoop: false,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                color: Color(int.parse(Purple)), width:2),
-                            top: BorderSide(
-                                color: Color(int.parse(Purple)), width: 2),
+                          value: BlocProvider.of<UserCubit>(context).height,
+                          minValue: 0,
+                          maxValue: 300,
+                          axis: Axis.vertical,
+                          infiniteLoop: false,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Color(int.parse(Purple)), width: 2),
+                              top: BorderSide(
+                                  color: Color(int.parse(Purple)), width: 2),
+                            ),
                           ),
-                        ),
-                        selectedTextStyle: TextStyle(
-                          fontSize: 35,
-                          color: Color(int.parse(Purple)),
-                        ),
-                        textStyle: TextStyle(
-                          fontSize:30,
-                          color: Color(int.parse(White)),
-                        ),
-                        onChanged: (value) => 
-                          BlocProvider.of<UserCubit>(context).updateHeight(value)
-                       
+                          selectedTextStyle: TextStyle(
+                            fontSize: 35,
+                            color: Color(int.parse(Purple)),
+                          ),
+                          textStyle: TextStyle(
+                            fontSize: 30,
+                            color: Color(int.parse(White)),
+                          ),
+                          onChanged: (value) =>
+                              BlocProvider.of<UserCubit>(context).updateHeight(value,userid)
+
                       ),
                     ],
                   ),
                 ),
                 Sized_Gap(Height: 5),
-                titles(txt: "Your height is ${BlocProvider.of<UserCubit>(context).height} Cm", Font_size: 30),
+                titles(
+                    txt:
+                        "Your height is ${BlocProvider.of<UserCubit>(context).height} Cm",
+                    Font_size: 30),
                 Sized_Gap(Height: 5),
                 Container(
                   padding: EdgeInsets.all(10),
@@ -94,13 +101,25 @@ class HeightPicker extends StatelessWidget {
                           Pad_Left_Right: 45,
                           Font_size: 20),
                       buttons(
-                          text: "Continue",
-                          action: () {
-                            print("Height is ${BlocProvider.of<UserCubit>(context).height}");
-                            Navigator.push(context, MaterialPageRoute(builder: (context) => GoalScreen()));
-                          },
-                          Pad_Left_Right: 20,
-                          Font_size: 20
+                        text: "Continue",
+                        action: () {
+                          print("Continue button pressed");
+
+
+                          final userCubit = BlocProvider.of<UserCubit>(context);
+                          print("Current weight: ${userCubit.weight}");
+
+                          userCubit.updateWeight(userCubit.weight, userid);
+
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => GoalScreen(userid: userid),
+                            ),
+                          );
+                        },
+                        Pad_Left_Right: 20,
+                        Font_size: 20,
                       ),
                     ],
                   ),

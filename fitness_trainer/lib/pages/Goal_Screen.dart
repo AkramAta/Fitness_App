@@ -12,6 +12,8 @@ import '../Component/Paragraphs.dart';
 import '../Component/Title.dart';
 
 class GoalScreen extends StatefulWidget {
+  final String userid;
+  GoalScreen({required this.userid});
   @override
   State<GoalScreen> createState() => _GoalScreenState();
 }
@@ -21,7 +23,7 @@ class _GoalScreenState extends State<GoalScreen> {
   late List<String> goalsTargets;
  
   late String containerBorderColor;
-
+late int i ;
   @override
   void initState() {
     super.initState();
@@ -38,8 +40,7 @@ class _GoalScreenState extends State<GoalScreen> {
       "Improving Endurance",
       "Others"
     ]; //
-    BlocProvider.of<UserCubit>(context).initializeGoals(goalsTargets.length); 
-    containerBorderColor = White; // Initial color for the container border
+    BlocProvider.of<UserCubit>(context).initializeGoals(goalsTargets.length);
   }
 
   @override
@@ -65,6 +66,7 @@ class _GoalScreenState extends State<GoalScreen> {
                     padding: EdgeInsets.only(left: 10, right: 10),
                     itemCount: goalsTargets.length,
                     itemBuilder: (context, index) {
+                      i =index;
                       // Determine border color based on the checkbox state
                       String BorderColor = BlocProvider.of<UserCubit>(context).isCheckedList[index] ? Purple : White;
                       return buildContainerWithBorder(
@@ -82,7 +84,7 @@ class _GoalScreenState extends State<GoalScreen> {
                           onChanged: (bool? value) {
                             BlocProvider.of<UserCubit>(context).updateCheckbox(index, value!);
                             print(BlocProvider.of<UserCubit>(context).isCheckedList);
-                            BlocProvider.of<UserCubit>(context).updateGoalTarget(goalsTargets[index]);
+                            BlocProvider.of<UserCubit>(context).updateGoalTarget(goalsTargets[index],widget.userid);
                             
                             BlocProvider.of<UserCubit>(context).isCheckedList[index] = value;
                             
@@ -113,12 +115,14 @@ class _GoalScreenState extends State<GoalScreen> {
                       buttons(
                           text: "Continue",
                           action: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => PhysicalActivity(),
-                              ),
-                            );
+                            BlocProvider.of<UserCubit>(context).updateGoalTarget(goalsTargets[i],widget.userid);
+
+                           // Navigator.push(
+                             // context,
+                           //   MaterialPageRoute(
+                         //       builder: (context) => PhysicalActivity(: widget.userid,),
+                          //    ),
+                           // );
                           },
                           Pad_Left_Right: 35,
                           Font_size: 20),

@@ -13,6 +13,8 @@ import 'package:numberpicker/numberpicker.dart';
 import '../Component/Colors.dart';
 
 class Age_Picker extends StatelessWidget {
+ late String userid;
+ Age_Picker({required this.userid});
   late List<String> Paragraph = [
     "Age in years this will help us to personalize",
     "an exercise program plan that will suit you"
@@ -71,9 +73,9 @@ class Age_Picker extends StatelessWidget {
                           color: Color(int.parse(White)),
                         ),
                         onChanged: (value) => ((
-                          
-                          BlocProvider.of<UserCubit>(context).updateAge(value)
-                          
+
+                          BlocProvider.of<UserCubit>(context).updateAge(value,userid)
+
                         )
                         )
                       ),
@@ -104,7 +106,7 @@ class Age_Picker extends StatelessWidget {
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => WeightPicker()));
+                                    builder: (context) => WeightPicker(userid: userid,)));
                                     print(BlocProvider.of<UserCubit>(context).age);
                                    
                           },

@@ -12,6 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../Component/Colors.dart';
 
 class Login extends StatelessWidget {
+  late String userid;
   final List Delays = [250, 500, 750];
   final double Padding_values = 10;
   final List<String> Logos = [
@@ -160,9 +161,9 @@ class Login extends StatelessWidget {
                         color: Color(int.parse(White)),
                       ),
                     ),
-                    onPressed: () {
+                    onPressed: () async {
                        loginUser(emailController.text,passwordController.text,context,listtoken,spe);
-                      Navigator.push(context, MaterialPageRoute(builder: (context)=>TellUs()));
+
                     },
                   ),
                   const SizedBox(height: 22),
@@ -242,11 +243,9 @@ class Login extends StatelessWidget {
                         "Don't have an account? ",
                         style: TextStyle(color: Color(int.parse(Grayish))),
                       ),
-                      TextButton(
-                        onPressed: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
-                        },
-                        child: TextButton(
+
+
+                        TextButton(
                           child: Text(
                             "Sign up",
                           style: TextStyle(color: Color(int.parse(Purple))),
@@ -254,7 +253,7 @@ class Login extends StatelessWidget {
                           onPressed: () {
                             Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                           },
-                        ),
+
                       ),
                     ],
                   ),

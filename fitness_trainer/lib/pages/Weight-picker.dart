@@ -5,19 +5,24 @@ import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
 import 'package:finalproject/Component/Title.dart';
 import 'package:finalproject/Component/buid_container.dart';
+import 'package:finalproject/Services/FireBase_Service.dart';
 import 'package:finalproject/pages/Height_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numberpicker/numberpicker.dart';
 import '../Component/Colors.dart';
-
+import 'package:finalproject/Business_Logic/Cubit/User_Cubit.dart';
+import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 class WeightPicker extends StatefulWidget {
+  final String userid;
+
+  WeightPicker({required this.userid});
   @override
   State<WeightPicker> createState() => _WeightPickerState();
 }
 
 class _WeightPickerState extends State<WeightPicker> {
-  
+  late int Weight;
   late List<String> Paragraph = [
     "Weight in kilogram , Don't worry you can always ",
     "change it later"
@@ -75,8 +80,7 @@ class _WeightPickerState extends State<WeightPicker> {
                           color: Color(int.parse(White)),
                         ),
                         onChanged: (value) => setState(() {
-                          BlocProvider.of<UserCubit>(context).updateWeight(value);
-                         
+                          BlocProvider.of<UserCubit>(context).updateWeight(value,widget.userid);
                         }),
                       ),
                     ],
@@ -101,16 +105,23 @@ class _WeightPickerState extends State<WeightPicker> {
                           Pad_Left_Right: 45,
                           Font_size: 20),
                       buttons(
-                          text: "Continue",
-                          action: () {
-                            Navigator.push(
-                                context,
-                                MaterialPageRoute(
-                                    builder: (context) => HeightPicker()));
-                                    print(BlocProvider.of<UserCubit>(context).weight);
-                          },
-                          Pad_Left_Right: 20,
-                          Font_size: 20),
+                        text: "Continue",
+                        action: () {
+                          // Use the weight from the UserCubit
+                          BlocProvider.of<UserCubit>(context).updateWeight(
+                              BlocProvider.of<UserCubit>(context).weight, widget.userid);
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => HeightPicker(userid: widget.userid),
+                            ),
+                          );
+                          print(BlocProvider.of<UserCubit>(context).weight);
+                        },
+                        Pad_Left_Right: 20,
+                        Font_size: 20,
+                      ),
+
                     ],
                   ),
                 ),

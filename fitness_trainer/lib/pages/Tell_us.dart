@@ -16,7 +16,8 @@ import '../Component/buid_container.dart';
 // في حجات كتير انا عاملها كفنكشن ف الكوكومبنت
 // ignore: must_be_immutable
 class TellUs extends StatelessWidget {
-
+late String userid;
+TellUs({required this.userid});
   late List<String> paragraph_text = [
     "to give you a better experience and results",
     "we need to know your gender"
@@ -57,8 +58,9 @@ class TellUs extends StatelessWidget {
                 buildEmptyButton(
                   onPressed: () {
                     selectedGender = 'Male';
-                    BlocProvider.of<UserCubit>(context).GetGender(selectedGender);
-                    print(BlocProvider.of<UserCubit>(context).gender);
+                    print(userid);
+                 BlocProvider.of<UserCubit>(context).updateGender(selectedGender,userid);
+             print(BlocProvider.of<UserCubit>(context).gender);
                   },
                   Child: buildCircleAvatar(
                     Bg_Color: selectedGender == 'Male'
@@ -88,7 +90,8 @@ class TellUs extends StatelessWidget {
                 buildEmptyButton(
                   onPressed: () {
                     selectedGender = 'Female';
-                     BlocProvider.of<UserCubit>(context).GetGender(selectedGender);
+
+                    BlocProvider.of<UserCubit>(context).updateGender(selectedGender,userid);
                      print(BlocProvider.of<UserCubit>(context).gender);
                   },
                   Child: buildCircleAvatar(
@@ -118,7 +121,7 @@ class TellUs extends StatelessWidget {
                 ),
                 Sized_Gap(Height: 120),
                 buttons(text: "Countiune", Pad_Left_Right: 100, action: () {
-                  Navigator.push(context, MaterialPageRoute(builder: (context) => Age_Picker()));
+                  Navigator.push(context, MaterialPageRoute(builder: (context) => Age_Picker(userid: userid,)));
                 })
               ],
             ),

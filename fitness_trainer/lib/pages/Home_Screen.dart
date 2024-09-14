@@ -6,8 +6,8 @@ import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
 import 'package:finalproject/Component/Title.dart';
 import 'package:finalproject/Component/buid_container.dart';
 import 'package:flutter/material.dart';
-import '../Component/Colors.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import '../Component/Colors.dart';
 class Home_Screen extends StatefulWidget {
   @override
   State<Home_Screen> createState() => _Home_ScreenState();

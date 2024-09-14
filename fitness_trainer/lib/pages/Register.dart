@@ -34,7 +34,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
   late final Animation<double> _animation;
   late TextEditingController emailController;
   late TextEditingController passwordController;
-  
+
   late bool? isChecked = false;
   late List Delays = [250, 500, 750];
 
@@ -65,7 +65,7 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
     super.dispose();
   }
 
-  
+
 
   @override
   Widget build(BuildContext context) {
@@ -106,7 +106,6 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.all(Radius.circular(40)),
                                   ),
                                 ),
-                                onChanged: BlocProvider.of<UserCubit>(context).UpdateEmail(emailController.text),
                               ),
                             ), // for email
                             Padding(
@@ -114,7 +113,8 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                                   left: Padding_values,
                                   right: Padding_values,
                                   top: 40,
-                                  bottom: 30),
+                                  bottom: 30
+                              ),
                               child: TextFormField(
                                 controller: passwordController,
                                 obscureText: BlocProvider.of<UserCubit>(context).obscureText,
@@ -137,19 +137,17 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                                     borderRadius: BorderRadius.all(Radius.circular(40)),
                                   ),
                                 ),
-                                onChanged: BlocProvider.of<UserCubit>(context).updatePassword(passwordController.text),
-                                
                               ),
                             ), // for password
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               crossAxisAlignment: CrossAxisAlignment.center,
                               children: [
-                               
+
                                 const SizedBox(
                                   width: 5,
                                 ),
-                               
+
                               ],
                             ), // For checkbox
                             const SizedBox(height: 250),
@@ -171,15 +169,13 @@ class _RegisterState extends State<Register> with TickerProviderStateMixin {
                               ),
                               onPressed: () {
                                 RegisterWith(emailController.text, passwordController.text,context);
-                                Navigator.push(context, MaterialPageRoute(builder: (context) =>  Login()));
-
                               },
                             ),
                             const SizedBox(
                               height: 15,
                             ),
-                            
-                           
+
+
                           ]),
                     )
                 );

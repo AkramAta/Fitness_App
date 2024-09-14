@@ -12,7 +12,8 @@ import '../Component/Paragraphs.dart';
 import '../Component/Title.dart';
 
 class PhysicalActivity extends StatelessWidget {
-  
+  late String userid;
+  PhysicalActivity({required this.userid});
   late List<String> paragraphs = [
     "Choose your regular activty level this will",
     "help us to personalize plans for you "
@@ -66,11 +67,11 @@ class PhysicalActivity extends StatelessWidget {
                         text: "Beginner",
                         Pad_Left_Right: 120,
                         action: () {
-                          
-                            BlocProvider.of<UserCubit>(context).updateActivityLevel("Beginner");
+
+                            BlocProvider.of<UserCubit>(context).updateActivityLevel("Beginner",userid);
                             // print(BlocProvider.of<UserCubit>(context).activityLevel);
-                           
-                          
+
+
                         }),
                     Sized_Gap(Height: 20),
                   ],
@@ -90,7 +91,7 @@ class PhysicalActivity extends StatelessWidget {
                     text: "Intermediate",
                     Pad_Left_Right: 100,
                     action: () {
-                      BlocProvider.of<UserCubit>(context).updateActivityLevel("Intermediate");
+                      BlocProvider.of<UserCubit>(context).updateActivityLevel("Intermediate",userid);
                       // print(BlocProvider.of<UserCubit>(context).activityLevel);
                       
                     }),
@@ -109,7 +110,7 @@ class PhysicalActivity extends StatelessWidget {
                     text: "Advanced",
                     Pad_Left_Right: 115,
                     action: () {
-                     BlocProvider.of<UserCubit>(context).updateActivityLevel("Advanced");
+                     BlocProvider.of<UserCubit>(context).updateActivityLevel("Advanced",userid);
                     //  print(BlocProvider.of<UserCubit>(context).activityLevel);
                      
                     }),
@@ -131,7 +132,7 @@ class PhysicalActivity extends StatelessWidget {
                     buttons(
                         text: "Continue",
                         action: () {
-                          Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile()));
+                         // Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile()));
                         },
                         Pad_Left_Right: 30,
                         Font_size: 20),
