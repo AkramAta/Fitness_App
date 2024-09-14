@@ -3,6 +3,7 @@ import 'package:finalproject/pages/Age_picker.dart';
 import 'package:finalproject/pages/Forget_pass.dart';
 
 import 'package:finalproject/pages/Goal_Screen.dart';
+import 'package:finalproject/pages/Home_Screen.dart';
 import 'package:finalproject/pages/Login.dart';
 
 import 'package:finalproject/pages/OTPscreen.dart';
@@ -33,7 +34,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Register(),
+        home: Home_Screen(),
       ),
     );
   }
