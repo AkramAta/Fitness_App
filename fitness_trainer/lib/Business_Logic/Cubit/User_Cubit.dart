@@ -1,5 +1,3 @@
-
-
 import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 
 import 'package:finalproject/Services/FireBase_Service.dart';
@@ -29,29 +27,29 @@ class UserCubit extends Cubit<UserState> {
   late bool? isChecked = false;
   
 
- void updateAge(int newAge) {
+ void updateAge(int newAge,String userid) {
     age = newAge;
-    emit(AgeUpdate(age));  // Call emitUserState to update state with all properties
-    print(age);
-    addUser(age: age);
-  }
+    emit(AgeUpdate(age));
+    updateUserField(userId:userid, fieldKey: "age",newValue:newAge);
 
-  void updateHeight(int newWeight) {
-    height = newWeight;
-    emit(HeightUpdate(height));  
-    addUser(height: height);
-  }
+ }
 
-  void updateWeight(int newHeight) {
-    weight = newHeight;
+  void updateWeight(int newWeight,String userid) {
+    weight = newWeight;
     emit(WeightUpdate(weight));
-    addUser(weight: weight);    
+    updateUserField(userId:userid, fieldKey: "weight",newValue:newWeight);
   }
 
-  updateActivityLevel(String newactivityLevel) {
+  void updateHeight(int newHeight,String userid) {
+    height = newHeight;
+    emit(HeightUpdate(height));
+    updateUserField(userId:userid, fieldKey: "height",newValue:newHeight);
+  }
+
+  updateActivityLevel(String newactivityLevel,String userid) {
     activityLevel = newactivityLevel;
     emit(ActivityLevelUpdate(activityLevel));
-    addUser(activitylevel: activityLevel);
+    updateUserField(userId:userid, fieldKey: "activitylevel",newValue:newactivityLevel);
   }
 
 
@@ -71,7 +69,7 @@ class UserCubit extends Cubit<UserState> {
     }
 
   // Function to update the selected goals
-  void updateGoalTarget(String goal) {
+  void updateGoalTarget(String goal,String userid) {
     if (selectedGoals.contains(goal)) {
       selectedGoals.remove(goal);
     } else {
@@ -80,11 +78,11 @@ class UserCubit extends Cubit<UserState> {
    print(selectedGoals);
     // emit(UserUpdated(isCheckedList: isCheckedList, selectedGoals: selectedGoals));
     emit(UserGoals());
-    addUser(selectedGoals: selectedGoals);
+    updateUserField(fieldKey:"selectedGoals",userId:userid,newValue:selectedGoals );
   }
 
 
-  GetGender(String gender) {
+  updateGender(String gender,String userid) {
 
     if (gender == "Male") {
       this.gender = "Male";
@@ -93,35 +91,35 @@ class UserCubit extends Cubit<UserState> {
     }
 
     emit(ChangeUserGender());
-    addUser(gender: gender);
-  }
-
-
-  UpdateName(String name) {
-    this.userName = name;
-    emit(UserName());
-    addUser(name: name);
-  }
-
-  UpdateNickname(String nickname) {
-    this.nickName = nickname;
-    emit(UserName());
-    addUser(nickName: nickname);
-  }
-
-  
-  UpdateNumber(String number) {
-    this.userphone = number;
-    emit(UserPhone());
-    addUser(phone: number);
     
   }
 
-  UpdateEmail(String email) {
+
+  UpdateName(String name,String userid) {
+    this.userName = name;
+    emit(UserName());
+    updateUserField(userId:userid, fieldKey: "name",newValue:name);
+  }
+
+  UpdateNickname(String nickname,String userid) {
+    this.nickName = nickname;
+    emit(UserName());
+    updateUserField(userId:userid, fieldKey: "nickName",newValue:nickname);
+  }
+
+  
+  UpdateNumber(String number,String userid) {
+    this.userphone = number;
+    emit(UserPhone());
+    updateUserField(userId:userid, fieldKey: "phone",newValue:number);
+    
+  }
+
+  UpdateEmail(String email,String userid) {
     this.email = email;
     emit(UserEmail());
-    addUser(email: email);
-  }
+    updateUserField(userId:userid, fieldKey: "email",newValue:email);
+ }
 
   UpdateImage(String image) {
     emit(UserImage());
@@ -131,7 +129,6 @@ class UserCubit extends Cubit<UserState> {
   updatePassword(String password){
     userpassword = password; 
     emit(UserPassword());
-    addUser(password: userpassword);
   }
   
 
@@ -157,5 +154,3 @@ class UserCubit extends Cubit<UserState> {
   
   
   }
-
-  

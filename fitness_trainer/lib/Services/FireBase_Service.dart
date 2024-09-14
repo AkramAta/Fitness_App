@@ -1,13 +1,16 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:finalproject/Component/Alert_Dialog.dart';
 import 'package:finalproject/Component/Snack_Bar.dart';
+import 'package:finalproject/pages/Home_Screen.dart';
+import 'package:finalproject/pages/Tell_us.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // Add or update user data
 Future<void> addUser({ String? userId, String? name,String? nickName,String? image, int? age, int? weight, int? height, String? gender, String? email, String? password,String? phone, List <String>? selectedGoals, String? activitylevel}) async {
-  await FirebaseFirestore.instance.collection('users').doc(userId).set({
+  await FirebaseFirestore.instance.collection('users').add({
+  "userId":userId,
     'name': name,
     'nickName': nickName,
     'image' : image,
@@ -22,6 +25,9 @@ Future<void> addUser({ String? userId, String? name,String? nickName,String? ima
     'activitylevel': activitylevel
   });
 }
+
+
+
 
 
 
@@ -42,6 +48,12 @@ Future<void> updateUserData(String userId, Map<String, dynamic> newData) async {
 }
 
 
+Future<void> updateUserField({required String userId,  String fieldKey ="",required dynamic newValue}) async {
+  await FirebaseFirestore.instance.collection('users').doc(userId).update({
+    fieldKey: newValue
+  });
+}
+
 
 // Delete a document
 Future<void> deleteUser(String userId) async {
@@ -51,33 +63,6 @@ Future<void> deleteUser(String userId) async {
 
 
 
-// Sign up new user
-Future<User?> signUp(String email, String password) async {
-  try {
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    return userCredential.user;
-  } catch (e) {
-    print(e);
-    return null;
-  }
-}
-
-// Login existing user
-Future<User?> login(String email, String password) async {
-  try {
-    UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-      email: email,
-      password: password,
-    );
-    return userCredential.user;
-  } catch (e) {
-    print(e);
-    return null;
-  }
-}
 
 
 
@@ -131,7 +116,6 @@ Future<void> loginUser(String email, String password,BuildContext context,List l
 
 
 
-
   try {
     if (await checkEmailVerified()) {
       // Sign in with email and password
@@ -139,12 +123,56 @@ Future<void> loginUser(String email, String password,BuildContext context,List l
         email: email,
         password: password,
       );
-      showDialogWithContext(context,"you have successfully logged in");
 
-      String? token = await userCredential.user!.getIdToken();
-      print("User token: $token");
-      listtoken.add(token!);
-      print(listtoken);
+      showDialogWithContext(context, "You have successfully logged in");
+
+      // Get the document ID asynchronously
+      String? docId = await getDocumentIdByEmail(email);
+
+      if (docId != null) {
+        // Get document reference
+        DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(docId);
+
+        // Fetch document data
+        DocumentSnapshot docSnapshot = await userDoc.get();
+        if (docSnapshot.exists) {
+
+          String? genderFromFirestore = docSnapshot.get('gender') as String?;
+          if (genderFromFirestore == null) {
+            genderFromFirestore = "Unknown"; // Or handle the null case as needed
+          };
+              if(genderFromFirestore == "Unknown")
+                {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TellUs(userid: docId,),
+                    ),
+                  );
+                }
+              else
+                {
+                  Navigator.of(context).push(
+                    MaterialPageRoute(
+                      builder: (context) => TellUs(userid: docId,),
+                    ),
+                  );
+                }
+
+
+        } else {
+          print('Document does not exist');
+        }
+      } else {
+        print('Document ID is null');
+      }
+
+
+
+      // Navigate to the next page after all operations are complete
+
+
+      // Get the user's token and store it
+
 
     } else {
       print("Email not verified");
@@ -155,11 +183,9 @@ Future<void> loginUser(String email, String password,BuildContext context,List l
           snacka(context, 'Successfully sent email verification');
         }).catchError((onError) {
           snacka(context, 'Error sending email verification: $onError');
-
         });
       } else {
         snacka(context, "No user is currently signed in");
-
       }
     }
   }
@@ -205,7 +231,6 @@ Future<void> loginUser(String email, String password,BuildContext context,List l
 
 
 Future<UserCredential> signInWithGoogle() async {
-  // Trigger the authentication flow
   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
 
   // Obtain the auth details from the request
@@ -228,7 +253,7 @@ Future<UserCredential> signInWithGoogle() async {
 Future<void> RegisterWith(String email, String password, BuildContext context) async {
   String spe = "";
 
-  bool check_email(String email) {
+ /* bool check_email(String email) {
     String name = "";
     for (int i = 0; i < email.length; i++) {
       if (email[i] == "@") {
@@ -239,7 +264,7 @@ Future<void> RegisterWith(String email, String password, BuildContext context) a
     }
     return name == "@gmail.com";
   }
-
+*/
   bool check_password(String password) {
     if (password.length >= 8) {
       for (int i = 0; i < password.length; i++) {
@@ -255,21 +280,26 @@ Future<void> RegisterWith(String email, String password, BuildContext context) a
   try {
     print("Checking email and password...");
 
-    final emailValid = check_email(email);
+ //   final emailValid = check_email(email);
     final passwordValid = check_password(password);
 
-    if (emailValid && passwordValid && email.isNotEmpty && password.isNotEmpty) {
+    if (  passwordValid && email.isNotEmpty && password.isNotEmpty) {
       final credential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
         email: email,
         password: password,
       );
       showDialogWithContext(context,'your account registered successfully');
 
+      String? userId = credential.user?.uid;
+
+
       await credential.user?.sendEmailVerification().then((_) {
         Future.delayed(Duration(milliseconds: 670), () {
           Navigator.of(context).pop();
           Navigator.of(context).pop();
           snacka(context, 'Successfully sent email verification');
+          addUser(email:email,password:password,userId:userId);
+
         });
       }).catchError((onError) {
 
@@ -287,11 +317,11 @@ Future<void> RegisterWith(String email, String password, BuildContext context) a
 
 
       }
-     else if (!emailValid) {
+  /*   else if (!emailValid) {
         snacka(context,"Your email must be in the format example@gmail.com");
 
 
-      }
+      }*/
       else if (!passwordValid) {
         snacka(context,"Weak password. Enter a password with at least one special character.");
 
@@ -315,6 +345,34 @@ Future<void> RegisterWith(String email, String password, BuildContext context) a
 
 
 
+Future<String?> getDocumentIdByEmail(String email) async {
+  final firestore = FirebaseFirestore.instance;
+
+  try {
+    final querySnapshot = await firestore.collection('users').get();
+    final documents = querySnapshot.docs;
+
+    if (documents.isNotEmpty) {
+      for (int i = 0; i < documents.length; i++) {
+        var doc = documents[i];
+        var fieldValue = doc.data()['email'];
+
+        if (fieldValue == email) {
+          print('Document ID at index $i: ${doc.id}');
+          return doc.id;
+        }
+      }
+      print('No document found with the provided email');
+      return null;
+    } else {
+      print('No documents found in the collection');
+      return null;
+    }
+  } catch (e) {
+    print('Error fetching documents: $e');
+    return null;
+  }
+}
 
 // Future<void> reauthenticateAndChangePassword(String newPassword, BuildContext context, ) async {
 //     User? user = FirebaseAuth.instance.currentUser;

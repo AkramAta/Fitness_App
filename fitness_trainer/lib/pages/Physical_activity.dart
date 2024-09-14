@@ -132,7 +132,7 @@ class PhysicalActivity extends StatelessWidget {
                     buttons(
                         text: "Continue",
                         action: () {
-                         // Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile()));
+                         Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile(userid: userid)));
                         },
                         Pad_Left_Right: 30,
                         Font_size: 20),

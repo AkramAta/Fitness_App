@@ -5,28 +5,24 @@ import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
 import 'package:finalproject/Component/Title.dart';
 import 'package:finalproject/Component/buid_container.dart';
-import 'package:finalproject/Services/FireBase_Service.dart';
+
 import 'package:finalproject/pages/Height_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:numberpicker/numberpicker.dart';
 import '../Component/Colors.dart';
-import 'package:finalproject/Business_Logic/Cubit/User_Cubit.dart';
-import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
-class WeightPicker extends StatefulWidget {
+
+class WeightPicker extends StatelessWidget {
   final String userid;
 
   WeightPicker({required this.userid});
-  @override
-  State<WeightPicker> createState() => _WeightPickerState();
-}
-
-class _WeightPickerState extends State<WeightPicker> {
   late int Weight;
+
   late List<String> Paragraph = [
     "Weight in kilogram , Don't worry you can always ",
     "change it later"
   ];
+
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<UserCubit, UserState>(
@@ -79,9 +75,9 @@ class _WeightPickerState extends State<WeightPicker> {
                           fontSize: 30,
                           color: Color(int.parse(White)),
                         ),
-                        onChanged: (value) => setState(() {
-                          BlocProvider.of<UserCubit>(context).updateWeight(value,widget.userid);
-                        }),
+                        onChanged: (value) => 
+                          BlocProvider.of<UserCubit>(context).updateWeight(value,userid)
+                        
                       ),
                     ],
                   ),
@@ -109,11 +105,11 @@ class _WeightPickerState extends State<WeightPicker> {
                         action: () {
                           // Use the weight from the UserCubit
                           BlocProvider.of<UserCubit>(context).updateWeight(
-                              BlocProvider.of<UserCubit>(context).weight, widget.userid);
+                              BlocProvider.of<UserCubit>(context).weight, userid);
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => HeightPicker(userid: widget.userid),
+                              builder: (context) => HeightPicker(userid: userid),
                             ),
                           );
                           print(BlocProvider.of<UserCubit>(context).weight);

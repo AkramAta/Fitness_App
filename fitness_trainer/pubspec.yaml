@@ -44,6 +44,7 @@ dependencies:
   numberpicker: null
   pinput: ^5.0.0
   smooth_page_indicator: null
+  sqflite: 
 dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:

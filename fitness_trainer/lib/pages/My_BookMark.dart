@@ -7,6 +7,8 @@ import "../Component/Paragraphs.dart";
 import "../Component/Title.dart";
 
 class My_Bookmark extends StatelessWidget {
+  late List<Map> bookmarkedWorkouts = [];
+  My_Bookmark({required this.bookmarkedWorkouts});
   late List<Map> List_Data = [
     {
       "image": "Assets/Image/bg-card-1.jpg",
@@ -157,7 +159,8 @@ class My_Bookmark extends StatelessWidget {
                                 TextAlign: TextAlign.start,
                               ),
                               trailing: IconButton(
-                                onPressed: () {},
+                                onPressed: () {
+                                                                },
                                 icon: FaIcon(
                                   FontAwesomeIcons.solidBookmark,
                                   color: Color(int.parse(White)),
