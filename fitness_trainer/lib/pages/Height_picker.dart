@@ -75,7 +75,7 @@ class HeightPicker extends StatelessWidget {
                             color: Color(int.parse(White)),
                           ),
                           onChanged: (value) =>
-                              BlocProvider.of<UserCubit>(context).updateHeight(value,userid)
+                              BlocProvider.of<UserCubit>(context).updateHeightusercubit(value,userid)
 
                       ),
                     ],
@@ -104,12 +104,8 @@ class HeightPicker extends StatelessWidget {
                         text: "Continue",
                         action: () {
                           print("Continue button pressed");
-
-
-                          final userCubit = BlocProvider.of<UserCubit>(context);
-                          print("Current weight: ${userCubit.weight}");
-
-                          userCubit.updateWeight(userCubit.weight, userid);
+                          BlocProvider.of<UserCubit>(context).updateHeight(
+                              BlocProvider.of<UserCubit>(context).height,userid);
 
                           Navigator.push(
                             context,

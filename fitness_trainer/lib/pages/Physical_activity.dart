@@ -68,7 +68,7 @@ class PhysicalActivity extends StatelessWidget {
                         Pad_Left_Right: 120,
                         action: () {
 
-                            BlocProvider.of<UserCubit>(context).updateActivityLevel("Beginner",userid);
+                            BlocProvider.of<UserCubit>(context).updateActivityLevelusercubit("Beginner",userid);
                             // print(BlocProvider.of<UserCubit>(context).activityLevel);
 
 
@@ -91,7 +91,7 @@ class PhysicalActivity extends StatelessWidget {
                     text: "Intermediate",
                     Pad_Left_Right: 100,
                     action: () {
-                      BlocProvider.of<UserCubit>(context).updateActivityLevel("Intermediate",userid);
+                      BlocProvider.of<UserCubit>(context).updateActivityLevelusercubit("Intermediate",userid);
                       // print(BlocProvider.of<UserCubit>(context).activityLevel);
                       
                     }),
@@ -110,7 +110,7 @@ class PhysicalActivity extends StatelessWidget {
                     text: "Advanced",
                     Pad_Left_Right: 115,
                     action: () {
-                     BlocProvider.of<UserCubit>(context).updateActivityLevel("Advanced",userid);
+                     BlocProvider.of<UserCubit>(context).updateActivityLevelusercubit("Advanced",userid);
                     //  print(BlocProvider.of<UserCubit>(context).activityLevel);
                      
                     }),
@@ -132,7 +132,9 @@ class PhysicalActivity extends StatelessWidget {
                     buttons(
                         text: "Continue",
                         action: () {
-                         Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile(userid: userid)));
+                          BlocProvider.of<UserCubit>(context).
+                          updateActivityLevel(BlocProvider.of<UserCubit>(context).activityLevel, userid);
+                          Navigator.push(context, MaterialPageRoute(builder: (context) => Fill_Profile(userid: userid,)));
                         },
                         Pad_Left_Right: 30,
                         Font_size: 20),

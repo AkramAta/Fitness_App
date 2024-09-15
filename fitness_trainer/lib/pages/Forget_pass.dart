@@ -38,10 +38,10 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
             return doc.id;
           }
         }
-        print('No document found with the provided email');
+        snacka(context,'No there is user found with the provided email');
         return null;
       } else {
-        print('No documents found in the collection');
+        snacka(context,'No there is user found in the collection');
         return null;
       }
     } catch (e) {

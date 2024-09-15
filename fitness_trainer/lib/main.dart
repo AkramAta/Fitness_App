@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
       create: (context) => UserCubit(),
       child: MaterialApp(
         debugShowCheckedModeBanner: false,
-        home: Home_Screen(),
+        home: Home_Screen(userid: "1",),
       ),
     );
   }

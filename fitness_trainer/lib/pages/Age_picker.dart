@@ -13,8 +13,11 @@ import 'package:numberpicker/numberpicker.dart';
 import '../Component/Colors.dart';
 
 class Age_Picker extends StatelessWidget {
- late String userid;
- Age_Picker({required this.userid});
+  late String userid;
+  late int age;
+
+  Age_Picker({required this.userid});
+
   late List<String> Paragraph = [
     "Age in years this will help us to personalize",
     "an exercise program plan that will suit you"
@@ -51,40 +54,36 @@ class Age_Picker extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       NumberPicker(
-                        value: BlocProvider.of<UserCubit>(context).age,
-                        minValue: 0,
-                        maxValue: 100,
-                        axis: Axis.vertical,
-                        infiniteLoop: false,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                color: Color(int.parse(Purple)), width: 2),
-                            top: BorderSide(
-                                color: Color(int.parse(Purple)), width: 2),
+                          value: BlocProvider.of<UserCubit>(context).age,
+                          minValue: 0,
+                          maxValue: 100,
+                          axis: Axis.vertical,
+                          infiniteLoop: false,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Color(int.parse(Purple)), width: 2),
+                              top: BorderSide(
+                                  color: Color(int.parse(Purple)), width: 2),
+                            ),
                           ),
-                        ),
-                        selectedTextStyle: TextStyle(
-                          fontSize: 35,
-                          color: Color(int.parse(Purple)),
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: 30,
-                          color: Color(int.parse(White)),
-                        ),
-                        onChanged: (value) => ((
-
-                          BlocProvider.of<UserCubit>(context).updateAge(value,userid)
-
-                        )
-                        )
-                      ),
+                          selectedTextStyle: TextStyle(
+                            fontSize: 35,
+                            color: Color(int.parse(Purple)),
+                          ),
+                          textStyle: TextStyle(
+                            fontSize: 30,
+                            color: Color(int.parse(White)),
+                          ),
+                          onChanged: (value) =>
+                              ((BlocProvider.of<UserCubit>(context).updateAgeusercubit(value)))),
                     ],
                   ),
                 ),
                 Sized_Gap(Height: 5),
                 titles(
-                    txt: "Your age is ${BlocProvider.of<UserCubit>(context).age} years old",
+                    txt:
+                        "Your age is ${BlocProvider.of<UserCubit>(context).age} years old",
                     Font_size: 30),
                 Sized_Gap(Height: 5),
                 Container(
@@ -103,12 +102,16 @@ class Age_Picker extends StatelessWidget {
                       buttons(
                           text: "Continue",
                           action: () {
+                            BlocProvider.of<UserCubit>(context).updateAge(
+                                BlocProvider.of<UserCubit>(context).age, userid);
                             Navigator.push(
                                 context,
                                 MaterialPageRoute(
-                                    builder: (context) => WeightPicker(userid: userid,)));
-                                    print(BlocProvider.of<UserCubit>(context).age);
-                                   
+                                    builder: (context) => WeightPicker(
+                                          userid: userid,)
+                                )
+                            );
+                            print(BlocProvider.of<UserCubit>(context).age);
                           },
                           Pad_Left_Right: 20,
                           Font_size: 20),

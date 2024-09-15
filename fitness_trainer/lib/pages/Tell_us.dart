@@ -1,7 +1,6 @@
 import 'package:finalproject/Business_Logic/Cubit/User_Cubit.dart';
 import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 import 'package:finalproject/Component/Button.dart';
-import 'package:finalproject/Services/FireBase_Service.dart';
 import 'package:finalproject/pages/Age_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -60,7 +59,7 @@ TellUs({required this.userid});
                   onPressed: () {
                     selectedGender = 'Male';
                     print(userid);
-                 BlocProvider.of<UserCubit>(context).updateGender(selectedGender,userid);
+                 BlocProvider.of<UserCubit>(context).updateGenderusercubit(selectedGender,userid);
              print(BlocProvider.of<UserCubit>(context).gender);
                   },
                   Child: buildCircleAvatar(
@@ -92,7 +91,7 @@ TellUs({required this.userid});
                   onPressed: () {
                     selectedGender = 'Female';
 
-                    BlocProvider.of<UserCubit>(context).updateGender(selectedGender,userid);
+                    BlocProvider.of<UserCubit>(context).updateGenderusercubit(selectedGender,userid);
                      print(BlocProvider.of<UserCubit>(context).gender);
                   },
                   Child: buildCircleAvatar(
@@ -122,7 +121,7 @@ TellUs({required this.userid});
                 ),
                 Sized_Gap(Height: 120),
                 buttons(text: "Countiune", Pad_Left_Right: 100, action: () {
-                  updateUserField(userId:userid, fieldKey: "gender",newValue:  BlocProvider.of<UserCubit>(context).gender);
+                  BlocProvider.of<UserCubit>(context).updateGender(selectedGender,userid);
                   Navigator.push(context, MaterialPageRoute(builder: (context) => Age_Picker(userid: userid,)));
                 })
               ],

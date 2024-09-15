@@ -1,64 +1,14 @@
 import "package:finalproject/Component/buid_container.dart";
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
-import "../Component/Button.dart";
 import "../Component/Colors.dart";
 import "../Component/Paragraphs.dart";
 import "../Component/Title.dart";
 
 class My_Bookmark extends StatelessWidget {
-  late List<Map> bookmarkedWorkouts = [];
-  My_Bookmark({required this.bookmarkedWorkouts});
-  late List<Map> List_Data = [
-    {
-      "image": "Assets/Image/bg-card-1.jpg",
-      "Titles": "Full Body Stretching",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-2.jpg",
-      "Titles": "Squat Movement Exercise",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-3.jpg",
-      "Titles": "Yoga Women Exercise",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-4.jpg",
-      "Titles": "Yoga Movement Exercise",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-5.jpg",
-      "Titles": "Abdominal Exercise",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-6.jpg",
-      "Titles": "Abdominal Crunches Exercise",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-7.jpg",
-      "Titles": "High-Intensity Interval Training",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-    {
-      "image": "Assets/Image/bg-card-8.jpg",
-      "Titles": "Push-Ups Exercise",
-      "subtitle": "Intermediate",
-      "icon": FontAwesomeIcons.bookmark,
-    },
-  ];
+  final List<Map> bookmarkedExercises; // Dynamic data passed from Home_Screen
+
+  My_Bookmark({required this.bookmarkedExercises}); // Constructor
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +26,7 @@ class My_Bookmark extends StatelessWidget {
             color: Color(int.parse(White)),
           ),
           onPressed: () {
-            // Define action on back button press
+            Navigator.pop(context); // Define action on back button press
           },
         ),
         actions: [
@@ -99,17 +49,20 @@ class My_Bookmark extends StatelessWidget {
       body: buildContainer(
         padding_All_direction: 20,
         backgroundColor: Color(int.parse(Black)),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Expanded(
-              child: GridView.builder(
+        child: bookmarkedExercises.isEmpty
+            ? Center(
+                child: Text(
+                  'No bookmarks added yet!',
+                  style: TextStyle(color: Colors.white, fontSize: 20),
+                ),
+              )
+            : GridView.builder(
                 gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 2,
-                  crossAxisSpacing: 5
+                  crossAxisSpacing: 5,
                 ),
-                itemCount: List_Data.length,
+                itemCount: bookmarkedExercises.length,
                 itemBuilder: (BuildContext context, int i) {
                   return Stack(
                     children: [
@@ -119,7 +72,7 @@ class My_Bookmark extends StatelessWidget {
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(20),
                           image: DecorationImage(
-                            image: AssetImage(List_Data[i]["image"]),
+                            image: AssetImage(bookmarkedExercises[i]["exerciseImage"]),
                             fit: BoxFit.fill,
                           ),
                         ),
@@ -140,7 +93,6 @@ class My_Bookmark extends StatelessWidget {
                           ),
                         ),
                       ),
-                      // Add Positioned widget to place the ListTile at the bottom
                       Container(
                         height: 180,
                         child: Column(
@@ -149,18 +101,19 @@ class My_Bookmark extends StatelessWidget {
                             ListTile(
                               contentPadding: EdgeInsets.all(10),
                               title: titles(
-                                txt: List_Data[i]["Titles"],
+                                txt: bookmarkedExercises[i]["name"], // Use "name" here
                                 Font_size: 14,
                                 text_Align: TextAlign.start,
                               ),
                               subtitle: paragraph(
-                                text: List_Data[i]["subtitle"],
+                                text: bookmarkedExercises[i]["instructions"], // Use "instructions" or other available fields
                                 Font_size: 12,
                                 TextAlign: TextAlign.start,
                               ),
                               trailing: IconButton(
                                 onPressed: () {
-                                                                },
+                                  // Optionally handle removing the bookmark
+                                },
                                 icon: FaIcon(
                                   FontAwesomeIcons.solidBookmark,
                                   color: Color(int.parse(White)),
@@ -179,7 +132,6 @@ class My_Bookmark extends StatelessWidget {
                                       child: Column(
                                         mainAxisSize: MainAxisSize.min, // Ensures the dialog is sized according to its content
                                         children: [
-                                          // Title
                                           titles(
                                             txt: "Remove from Bookmark?",
                                             Font_size: 18,
@@ -190,14 +142,13 @@ class My_Bookmark extends StatelessWidget {
                                             thickness: 1,
                                           ),
                                           SizedBox(height: 20),
-                                          // Card preview (image, title, and subtitle)
                                           Container(
                                             height: 150,
                                             width: double.infinity,
                                             decoration: BoxDecoration(
                                               borderRadius: BorderRadius.circular(15),
                                               image: DecorationImage(
-                                                image: AssetImage(List_Data[i]["image"]),
+                                                image: AssetImage(bookmarkedExercises[i]["exerciseImage"]),
                                                 fit: BoxFit.fill,
                                               ),
                                             ),
@@ -211,13 +162,13 @@ class My_Bookmark extends StatelessWidget {
                                                     crossAxisAlignment: CrossAxisAlignment.start,
                                                     children: [
                                                       titles(
-                                                        txt: List_Data[i]["Titles"],
+                                                        txt: bookmarkedExercises[i]["name"], // Use "name"
                                                         Font_size: 16,
                                                         text_Align: TextAlign.start,
                                                         txt_color: Color(int.parse(White)),
                                                       ),
                                                       paragraph(
-                                                        text: List_Data[i]["subtitle"], // Add any subtitle or detail here
+                                                        text: bookmarkedExercises[i]["instructions"], // Use "instructions"
                                                         Font_size: 12,
                                                         TextAlign: TextAlign.start,
                                                         color: Colors.white,
@@ -229,11 +180,9 @@ class My_Bookmark extends StatelessWidget {
                                             ),
                                           ),
                                           SizedBox(height: 20),
-                                          // Buttons
                                           Row(
                                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
-                                              // Cancel Button
                                               TextButton(
                                                 onPressed: () {
                                                   Navigator.of(context).pop(); // Close the dialog
@@ -250,7 +199,6 @@ class My_Bookmark extends StatelessWidget {
                                                   style: TextStyle(color: Colors.white),
                                                 ),
                                               ),
-                                              // Yes, Remove Button
                                               TextButton(
                                                 onPressed: () {
                                                   // Add your logic for removing the bookmark here
@@ -276,8 +224,6 @@ class My_Bookmark extends StatelessWidget {
                                   ),
                                 );
                               },
-
-
                             ),
                           ],
                         ),
@@ -286,9 +232,6 @@ class My_Bookmark extends StatelessWidget {
                   );
                 },
               ),
-            ),
-          ],
-        ),
       ),
     );
   }

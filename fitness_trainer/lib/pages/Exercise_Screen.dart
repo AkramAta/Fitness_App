@@ -1,64 +1,71 @@
-import 'package:finalproject/Component/Button.dart';
-import 'package:finalproject/Component/Colors.dart';
-import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
-import 'package:finalproject/Component/Title.dart';
-import 'package:finalproject/Component/buid_container.dart';
 import 'package:flutter/material.dart';
+import '../Component/Title.dart';
+import '../Component/Paragraphs.dart';
+import '../Component/Colors.dart';
 
 class ExerciseScreen extends StatelessWidget {
+  final String muscleGroup;
+  final List<Map> exercises;
+
+  ExerciseScreen({required this.muscleGroup, required this.exercises});
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Color(int.parse(Black)),
-      body: SafeArea(
-        child: buildContainer(
-          backgroundColor: Color(int.parse(Black)),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-         Expanded(
-           flex: 9,
-           child: Container(
-             decoration:BoxDecoration(
-                 borderRadius: BorderRadius.only(
-                   topLeft: Radius.circular(20),
-                   topRight: Radius.circular(20),
-                 ),
-              image: DecorationImage(
-                fit: BoxFit.fill,
-                  image: AssetImage("Assets/Image/bg-card-1.jpg" )
-              )
-             ),
-           ),
-         )
-            // Pose name and pause button
-            ,Expanded(
-                flex: 3,
-              child: Padding(
-                padding: const EdgeInsets.all(20),
-                child: Column(
-                  children: [
-                    titles(txt:'Text-here', Font_size:30 ),
-                    Sized_Gap(Height:20 ),
-                  ],
-                ),
-              ),
-            ),
-            // Navigation buttons
-            Padding(
-              padding: const EdgeInsets.only(
-                 left: 20.0 , top: 5  , bottom: 50  , right:20.0
-              ),
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      appBar: AppBar(
+        title: Text('$muscleGroup Exercises'),
+        backgroundColor: Color(int.parse(Black)),
+      ),
+      body: Padding(
+        padding: const EdgeInsets.all(10.0),
+        child: ListView.builder(
+          itemCount: exercises.length,
+          itemBuilder: (context, index) {
+            String exerciseName = exercises[index]["name"] ?? "Unknown Exercise";
+            String exerciseInstructions = exercises[index]["instructions"] ?? "No instructions available.";
+            String exerciseImage = exercises[index]["image"] ?? "assets/Image/default_image.jpeg";
+
+            return Card(
+              elevation: 4,
+              margin: const EdgeInsets.symmetric(vertical: 10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                 buttons(text:  'Previous', action: (){} , Font_size: 20 , colour: Color(int.parse(Grayish))),
-                  buttons(text:  'Skip', action: (){} , Font_size: 20 , colour: Color(int.parse(Grayish))),
+                  // Displaying the exercise image
+                  ClipRRect(
+                    borderRadius: BorderRadius.vertical(top: Radius.circular(10)),
+                    child: Image.asset(
+                      exerciseImage,
+                      height: 150,
+                      width: double.infinity,
+                      fit: BoxFit.cover,
+                    ),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.all(15),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        // Title of the exercise
+                        titles(
+                          txt: exerciseName,
+                          txt_color: Color(int.parse(Black)),
+                          Font_size: 20,
+                        ),
+                        SizedBox(height: 8),
+                        // Instructions for the exercise
+                        paragraph(
+                          text: exerciseInstructions,
+                          Font_size: 16,
+                          TextAlign: TextAlign.start,
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ),
-            ],
-          ),
+            );
+          },
         ),
       ),
     );

@@ -54,30 +54,30 @@ class WeightPicker extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       NumberPicker(
-                        value: BlocProvider.of<UserCubit>(context).weight,
-                        minValue: 0,
-                        maxValue: 200,
-                        axis: Axis.horizontal,
-                        infiniteLoop: false,
-                        decoration: BoxDecoration(
-                          border: Border(
-                            bottom: BorderSide(
-                                color: Color(int.parse(Purple)), width: 2),
-                            top: BorderSide(
-                                color: Color(int.parse(Purple)), width: 2),
+                          value: BlocProvider.of<UserCubit>(context).weight,
+                          minValue: 0,
+                          maxValue: 200,
+                          axis: Axis.horizontal,
+                          infiniteLoop: false,
+                          decoration: BoxDecoration(
+                            border: Border(
+                              bottom: BorderSide(
+                                  color: Color(int.parse(Purple)), width: 2),
+                              top: BorderSide(
+                                  color: Color(int.parse(Purple)), width: 2),
+                            ),
                           ),
-                        ),
-                        selectedTextStyle: TextStyle(
-                          fontSize: 35,
-                          color: Color(int.parse(Purple)),
-                        ),
-                        textStyle: TextStyle(
-                          fontSize: 30,
-                          color: Color(int.parse(White)),
-                        ),
-                        onChanged: (value) => 
-                          BlocProvider.of<UserCubit>(context).updateWeight(value,userid)
-                        
+                          selectedTextStyle: TextStyle(
+                            fontSize: 35,
+                            color: Color(int.parse(Purple)),
+                          ),
+                          textStyle: TextStyle(
+                            fontSize: 30,
+                            color: Color(int.parse(White)),
+                          ),
+                          onChanged: (value) =>
+                              BlocProvider.of<UserCubit>(context).updateWeightusercubit(value,userid)
+
                       ),
                     ],
                   ),

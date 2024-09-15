@@ -168,41 +168,7 @@ class _Profile_SettingState extends State<Profile_Setting> {
                 ),
               ),
               Spacer(),
-              BottomNavigationBar(
-                currentIndex: Current_Index,
-                backgroundColor: Colors.black,
-                onTap: (value) {
-                  setState(() {
-                    Current_Index = value;
-                  });
-                },
-                items: [
-                  BottomNavigationBarItem(
-                      activeIcon: Icon(Icons.home , color:Color(int.parse(Purple)),),
-                      backgroundColor: Color(int.parse(Black)),
-                      icon:Icon(Icons.home),
-                      label: "home"
-                  ),
-                  BottomNavigationBarItem(
-                      activeIcon: Icon(Icons.compass_calibration_rounded , color:Color(int.parse(Purple)),),
-                      icon:Icon(Icons.compass_calibration_rounded ),
-                      backgroundColor: Color(int.parse(Black)),
-                      label: "Discover"
-                  ),
-                  BottomNavigationBarItem(
-                      activeIcon: Icon(Icons.add_chart , color:Color(int.parse(Purple)),),
-                      icon:Icon(Icons.add_chart),
-                      backgroundColor: Color(int.parse(Black)),
-                      label: "Insights"
-                  ),
-                  BottomNavigationBarItem(
-                      activeIcon: Icon(Icons.person , color:Color(int.parse(Purple)),),
-                      icon:Icon(Icons.person),
-                      backgroundColor: Color(int.parse(Black)),
-                      label: "profile"
-                  ),
-                ],
-              )
+              
             ],
           ),
 
