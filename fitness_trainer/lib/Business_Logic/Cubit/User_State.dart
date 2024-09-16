@@ -64,4 +64,3 @@ class UserEmail extends UserState {}
 class UserPhone extends UserState {}
 
 class UserImage extends UserState {}
-

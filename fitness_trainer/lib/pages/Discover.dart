@@ -1,3 +1,4 @@
+
 import 'package:finalproject/Component/Build_ContainerWith_Border.dart';
 import 'package:finalproject/Component/Build_Container_%20with_Fixed_width_hieght.dart';
 import 'package:finalproject/Component/Button.dart';
@@ -11,6 +12,11 @@ import '../Models/ExercisesData/ExercisesDatabase.dart';
 import 'Exercise_Screen.dart';
 
 class Discover extends StatefulWidget {
+  final String userid;
+  final Map userdata;
+
+  Discover({required this.userid, required this.userdata});
+
   @override
   _DiscoverState createState() => _DiscoverState();
 }
@@ -20,7 +26,7 @@ class _DiscoverState extends State<Discover> {
   final List<String> buttons_TxT = ["Beginner", "Intermediate", "Advanced"];
   final List<bool> IsChecked = [true, false, false]; // Default to "Beginner" selected
 
-  String selectedLevel = "beginner"; // Default level
+  String selectedLevel = ''; // Default level
   String selectedMuscle = "biceps"; // Default muscle group
   List<Map> List_Data = [];
   List<Map> bookmarkedExercises = [];
@@ -28,6 +34,7 @@ class _DiscoverState extends State<Discover> {
   @override
   void initState() {
     super.initState();
+    selectedLevel = widget.userdata["activitylevel"] ?? "Beginner";
     loadWorkoutData(selectedLevel); // Load beginner data by default
     loadBookmarkedExercises(); // Load bookmarked exercises
   }
@@ -45,7 +52,7 @@ class _DiscoverState extends State<Discover> {
 
       // Find the selected level's data in the ExercisesDatabase
       var levelData = ExercisesDatabase.firstWhere(
-        (item) => item.containsKey(selectedLevel),
+            (item) => item.containsKey(selectedLevel),
         orElse: () => <String, Object>{},
       );
 
@@ -53,7 +60,7 @@ class _DiscoverState extends State<Discover> {
         var selectedLevelData = levelData[selectedLevel] as Map<String, dynamic>;
 
         var muscleGroupData = (selectedLevelData["workout"] as List<dynamic>).firstWhere(
-          (muscle) => (muscle as Map<String, dynamic>).containsKey(muscleGroup),
+              (muscle) => (muscle as Map<String, dynamic>).containsKey(muscleGroup),
           orElse: () => <String, Object>{},
         );
 
@@ -120,7 +127,6 @@ class _DiscoverState extends State<Discover> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            
             _buildLevelSelection(),
             _buildMuscleList(), // Added this to show muscle groups
             _buildExerciseList(),

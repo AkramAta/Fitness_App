@@ -117,12 +117,12 @@ late int i ;
                           action: () {
                             BlocProvider.of<UserCubit>(context).updateGoalTarget(goalsTargets[i],widget.userid);
 
-                           // Navigator.push(
-                             // context,
-                           //   MaterialPageRoute(
-                         //       builder: (context) => PhysicalActivity(: widget.userid,),
-                          //    ),
-                           // );
+                            Navigator.push(
+                              context,
+                             MaterialPageRoute(
+                               builder: (context) => PhysicalActivity(userid: widget.userid,),
+                             ),
+                            );
                           },
                           Pad_Left_Right: 35,
                           Font_size: 20),
@@ -137,5 +137,4 @@ late int i ;
     );
   }
 }
-
 

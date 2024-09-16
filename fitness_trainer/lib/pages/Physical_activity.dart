@@ -149,4 +149,3 @@ class PhysicalActivity extends StatelessWidget {
   }
 }
 
-

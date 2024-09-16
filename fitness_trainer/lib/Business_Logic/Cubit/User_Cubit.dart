@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:finalproject/Business_Logic/Cubit/User_State.dart';
 
 import 'package:finalproject/Services/FireBase_Service.dart';
@@ -12,7 +14,7 @@ class UserCubit extends Cubit<UserState> {
   late String userphone = "";
   late String userpassword = "";
   late String gender = "";
-  late String image = "";
+  late File image ;
   late int weight = 0;
   late int height = 0;
   late int age = 0;
@@ -24,6 +26,18 @@ class UserCubit extends Cubit<UserState> {
   late bool obscureText = true;
   late bool obscureText2 = true;
   late bool? isChecked = false;
+
+  void updateimage(String imageUrl, String userId) {
+    // Update image URL in the user profile (database or wherever you are storing it)
+    updateUserField(userId: userId, fieldKey: "image", newValue: imageUrl);
+    emit(AgeUpdate(age)); // Emit state change
+  }
+
+  void updateimageUsercubit(File NewImage, String userid) {
+    image = NewImage;
+    emit(AgeUpdate(age));
+  }
+
 
   void updateAge(int newAge, String userid) {
     age = newAge;
@@ -177,10 +191,6 @@ class UserCubit extends Cubit<UserState> {
     updateUserField(userId: userid, fieldKey: "email", newValue: email);
   }
 
-  UpdateImage(String image) {
-    emit(UserImage());
-    addUser(image: image);
-  }
 
   updatePassword(String password, String userid) {
     userpassword = password;

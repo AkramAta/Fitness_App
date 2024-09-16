@@ -1,22 +1,30 @@
 import 'package:finalproject/Component/Build_ContainerWith_Border.dart';
-import 'package:finalproject/Component/Build_Container_%20with_Fixed_width_hieght.dart';
 import 'package:finalproject/Component/Button.dart';
+import 'package:finalproject/pages/Notification_page.dart';
+
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../Component/Build_Container_ with_Fixed_width_hieght.dart';
 import '../Component/Colors.dart';
 import '../Component/buid_container.dart';
 import '../Component/Title.dart';
 import '../Models/ExercisesData/ExercisesDatabase.dart';
 import 'My_Bookmark.dart';
-import 'Notification_page.dart';
+
 import 'Profile_Setting.dart';
 import 'Discover.dart';
 import 'Exercise_Screen.dart';
 
 class Home_Screen extends StatefulWidget {
   final String userid;
-  Home_Screen({required this.userid});
+  final  Map <String, dynamic> data;
+
+  Home_Screen({
+    required this.userid,
+    required this.data,
+  });
+
   @override
   _Home_ScreenState createState() => _Home_ScreenState();
 }
@@ -26,17 +34,17 @@ class _Home_ScreenState extends State<Home_Screen> {
   final List<String> buttons_TxT = ["Beginner", "Intermediate", "Advanced"];
   final List<bool> IsChecked = [true, false, false]; // Default to "Beginner" selected
 
-  String selectedLevel = "beginner"; // Default level
+  String selectedLevel = ''; // Default level
   String selectedMuscle = "biceps"; // Default muscle group
   List<Map> List_Data = [];
   List<Map> bookmarkedExercises = [];
   int currentIndex = 0;
-  String username = "akram";
 
   @override
   void initState() {
     super.initState();
-    loadWorkoutData(selectedLevel); // Load beginner data by default
+    selectedLevel = widget.data["level"] ?? "Beginner"; // Initialize selectedLevel
+    loadWorkoutData(selectedLevel); // Load data for the default level
     loadBookmarkedExercises(); // Load bookmarked exercises
   }
 
@@ -47,50 +55,42 @@ class _Home_ScreenState extends State<Home_Screen> {
     });
   }
 
-  // Function to load exercises for a specific muscle group based on the selected level
   void loadMuscleData(String muscleGroup) {
-  setState(() {
-    List_Data = []; // Reset the exercise list
+    setState(() {
+      List_Data = []; // Reset the exercise list
 
-    // Ensure ExercisesDatabase and selected level exist
-    if (ExercisesDatabase.isNotEmpty) {
-      // Use firstWhere to find the correct level data or provide an empty map if not found
-      var selectedLevelData = ExercisesDatabase.firstWhere(
-        (levelData) => levelData.containsKey(selectedLevel),
-        orElse: () => <String, Object>{}, // Providing an empty map as a fallback
-      );
-
-      // Proceed only if we have valid data for the selected level
-      if (selectedLevelData.isNotEmpty && selectedLevelData[selectedLevel] != null) {
-        var workoutList = selectedLevelData[selectedLevel]["workout"] as List<dynamic>;
-
-        // Find the correct muscle group data
-        var muscleGroupData = workoutList.firstWhere(
-          (muscle) => (muscle as Map<String, dynamic>).containsKey(muscleGroup),
-          orElse: () => <String, Object>{}, // Fallback if muscle group is not found
+      if (ExercisesDatabase.isNotEmpty) {
+        var selectedLevelData = ExercisesDatabase.firstWhere(
+              (levelData) => levelData.containsKey(selectedLevel),
+          orElse: () => <String, Object>{}, // Providing an empty map as a fallback
         );
 
-        // Check if muscle group data is valid
-        if (muscleGroupData.isNotEmpty && muscleGroupData[muscleGroup] != null) {
-          var exercises = muscleGroupData[muscleGroup]['exercises'] as List<dynamic>;
-          String muscleImage = muscleGroupData[muscleGroup]['image'] ?? "assets/Image/default_image.jpeg";
+        if (selectedLevelData.isNotEmpty && selectedLevelData[selectedLevel] != null) {
+          var workoutList = selectedLevelData[selectedLevel]["workout"] as List<dynamic>;
 
-          // Populate List_Data with exercises
-          for (var exercise in exercises) {
-            List_Data.add({
-              "name": exercise['name'] ?? "Unknown Exercise",
-              "instructions": exercise['instructions'] ?? "No instructions",
-              "equipment": exercise['equipment'] ?? "No equipment",
-              "exerciseImage": exercise['image'] ?? "assets/Image/default_image.jpeg",
-              "muscleImage": muscleImage,
-            });
+          var muscleGroupData = workoutList.firstWhere(
+                (muscle) => (muscle as Map<String, dynamic>).containsKey(muscleGroup),
+            orElse: () => <String, Object>{}, // Fallback if muscle group is not found
+          );
+
+          if (muscleGroupData.isNotEmpty && muscleGroupData[muscleGroup] != null) {
+            var exercises = muscleGroupData[muscleGroup]['exercises'] as List<dynamic>;
+            String muscleImage = muscleGroupData[muscleGroup]['image'] ?? "assets/Image/default_image.jpeg";
+
+            for (var exercise in exercises) {
+              List_Data.add({
+                "name": exercise['name'] ?? "Unknown Exercise",
+                "instructions": exercise['instructions'] ?? "No instructions",
+                "equipment": exercise['equipment'] ?? "No equipment",
+                "exerciseImage": exercise['image'] ?? "assets/Image/default_image.jpeg",
+                "muscleImage": muscleImage,
+              });
+            }
           }
         }
       }
-    }
-  });
-}
-
+    });
+  }
 
   Future<void> saveBookmarkedExercises() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -131,8 +131,8 @@ class _Home_ScreenState extends State<Home_Screen> {
         index: currentIndex,
         children: [
           _buildHomePage(),
-          Discover(),
-          Profile_Setting(),
+          Discover(userid: widget.userid, userdata: widget.data),
+          Profile_Setting(userid: widget.userid, userdata: widget.data),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -196,7 +196,7 @@ class _Home_ScreenState extends State<Home_Screen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            titles(txt: "Morning, $username", Font_size: 40),
+            titles(txt: "Morning, ${widget.data["name"] ?? 'User'}", Font_size: 40),
             SizedBox(height: 10),
             titles(txt: "Featured Workouts", txt_color: Color(int.parse(White)), Font_size: 20),
             SizedBox(height: 10),
@@ -219,12 +219,10 @@ class _Home_ScreenState extends State<Home_Screen> {
       height: 200,
       child: ListView.builder(
         scrollDirection: Axis.horizontal,
-        itemCount: workout.length, // Number of muscles
+        itemCount: workout.length,
         itemBuilder: (context, index) {
-          String muscleGroup = workout[index]; // Fetching the muscle group name
-
-          // Fetching the corresponding image for each muscle group from the database
-          String muscleImage = 'assets/Image/default_image.jpeg'; // Default image
+          String muscleGroup = workout[index];
+          String muscleImage = 'assets/Image/default_image.jpeg';
 
           if (ExercisesDatabase.isNotEmpty &&
               ExercisesDatabase[0].containsKey(selectedLevel) &&
@@ -248,8 +246,8 @@ class _Home_ScreenState extends State<Home_Screen> {
     return GestureDetector(
       onTap: () {
         setState(() {
-          selectedMuscle = muscleGroup; // Update selected muscle group
-          loadMuscleData(selectedMuscle); // Load exercises for this muscle group
+          selectedMuscle = muscleGroup;
+          loadMuscleData(selectedMuscle);
         });
       },
       child: Stack(
@@ -279,7 +277,7 @@ class _Home_ScreenState extends State<Home_Screen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  titles(txt: muscleGroup.toUpperCase(), Font_size: 25), // Display muscle group name
+                  titles(txt: muscleGroup.toUpperCase(), Font_size: 25),
                 ],
               ),
             ),
@@ -319,7 +317,6 @@ class _Home_ScreenState extends State<Home_Screen> {
                   borderRadius: 40,
                   Margin_top_and_bottom: 0,
                 ),
-                // Adding space between the buttons
                 SizedBox(width: 10),
               ],
             ],

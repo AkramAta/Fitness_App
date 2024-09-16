@@ -1,18 +1,40 @@
 import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
 import 'package:finalproject/Component/buid_container.dart';
+import 'package:finalproject/pages/Login.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Component/Colors.dart';
 import '../Component/Title.dart';
+import 'Edit_Profile.dart';
+import 'Notification_Settings.dart';
+import 'Notification_page.dart';
 class Profile_Setting extends StatefulWidget {
+  final String userid;
+  final Map <String, dynamic> userdata;
+  Profile_Setting({required this.userid,required this.userdata});
   @override
   State<Profile_Setting> createState() => _Profile_SettingState();
 }
 
+
+
+
 class _Profile_SettingState extends State<Profile_Setting> {
   late int Current_Index = 3;    // for index of bottom navigator bar
-  late String userName = "Akram Atta"; // put username here !
-  late String userGmail = "Akram_atta@gmail.com"; // put usergmail here !
+  late String userName ; // put username here !
+  late String userGmail ; // put usergmail here !
+
+  @override
+  void initState() {
+    super.initState();
+    userName = widget.userdata["nickName"];
+    userGmail =widget.userdata["email"];
+    String userid = widget.userid;
+     Map userdata = widget.userdata;
+
+  }
+
   late List <Map> Data_LIstTiles =[
     {
       "title": "Edit Profile",
@@ -141,10 +163,22 @@ class _Profile_SettingState extends State<Profile_Setting> {
               ),
               for(int i = 0; i<Data_LIstTiles.length; i++)
               ListTile(
-                onTap: (){},
+                onTap: (){
+                  if(Data_LIstTiles[i]["title"] == "Edit Profile")
+                  {
+                    print(widget.userdata);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => Edit_Profile(userid: widget.userid,userdata:widget.userdata,)));
+                  } if(Data_LIstTiles[i]["title"] == "Notifications")
+                  {
+                    print(widget.userdata);
+                    Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationSettings()));
+                  }
+                },
                 contentPadding: EdgeInsets.all(0),
                 leading: IconButton(
-                    onPressed: (){},
+                    onPressed: (){
+
+                    },
                     icon:
                     Icon(Data_LIstTiles[i]["icon"] , color: Color(int.parse(White)),)
                 ),
@@ -157,7 +191,10 @@ class _Profile_SettingState extends State<Profile_Setting> {
                 onTap: (){},
                 contentPadding: EdgeInsets.all(0),
                 leading: IconButton(
-                    onPressed: (){},
+                    onPressed: () async {
+                      await FirebaseAuth.instance.signOut();
+                      Navigator.of(context).push(MaterialPageRoute(builder:  (context) => Login()));
+                    },
                     icon:
                     Icon(FontAwesomeIcons.rightFromBracket, color: Colors.red,)
                 ),

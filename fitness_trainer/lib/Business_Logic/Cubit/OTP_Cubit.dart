@@ -117,5 +117,3 @@ class OtpCubit extends Cubit<OtpState> {
       emit(OtpPasswordChange());
   }
 }
-
-

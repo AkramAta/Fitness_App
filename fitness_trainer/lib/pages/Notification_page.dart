@@ -3,7 +3,7 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import '../Component/Colors.dart';
 import '../Component/SizedBox_for Gapping.dart';
 import '../Component/Title.dart';
-import '../Component/Build_ContainerWith_Border.dart';
+
 import '../Component/Paragraphs.dart';
 import '../Component/buid_container.dart';
 
@@ -66,7 +66,7 @@ class Notification_Page extends StatelessWidget {
             color: Color(int.parse(White)),
           ),
           onPressed: () {
-            // Define action on back button press
+           Navigator.pop(context);
           },
         ),
       ),

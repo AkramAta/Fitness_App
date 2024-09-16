@@ -251,6 +251,8 @@ class Login extends StatelessWidget {
                           style: TextStyle(color: Color(int.parse(Purple))),
                           ),
                           onPressed: () {
+                            emailController.clear();
+                            passwordController.clear();
                             Navigator.push(context, MaterialPageRoute(builder: (context) => Register()));
                           },
 

@@ -34,6 +34,7 @@ class _NotificationSettingsState extends State<NotificationSettings> {
           color: Color(int.parse(White)),
         ),
         onPressed: () {
+          Navigator.of(context).pop();
         },
       ),
     ),
