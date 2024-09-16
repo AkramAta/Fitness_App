@@ -27,18 +27,23 @@ class Get_Started extends StatelessWidget {
               children: [
                 Column(
                   children: [
-                    Container(
-                      height:
-                          400, // Adjusted the height to make room for other elements
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage("Assets/Image/p_v-1.jpg"),
+                    Expanded(
+                      flex:9 ,
+                      child: Container(
+
+
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("Assets/Image/p_v-1.jpg"),
+                          ),
                         ),
                       ),
                     ),
                     Expanded(
+                      flex: 4,
                       child: Container(
+
                         padding: const EdgeInsets.all(20),
                         width: double.infinity,
                         color: Color(int.parse(Black)),
@@ -57,16 +62,21 @@ class Get_Started extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Container(
-                      height: 400, // Adjusted the height
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage("Assets/Image/p_v-2.jpg"),
+
+                    Expanded(
+                      flex: 9,
+                      child: Container(
+
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("Assets/Image/p_v-2.jpg"),
+                          ),
                         ),
                       ),
                     ),
                     Expanded(
+                      flex: 4,
                       child: Container(
                         padding: const EdgeInsets.all(20),
                         width: double.infinity,
@@ -86,16 +96,19 @@ class Get_Started extends StatelessWidget {
                 ),
                 Column(
                   children: [
-                    Container(
-                      height: 400, // Adjusted the height
-                      decoration: const BoxDecoration(
-                        image: DecorationImage(
-                          fit: BoxFit.cover,
-                          image: AssetImage("Assets/Image/p_v-3.jpg"),
+                    Expanded(
+                      flex: 10,
+                      child: Container(
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage("Assets/Image/p_v-3.jpg"),
+                          ),
                         ),
                       ),
                     ),
                     Expanded(
+                      flex: 6,
                       child: Container(
                         padding: const EdgeInsets.all(20),
                         width: double.infinity,

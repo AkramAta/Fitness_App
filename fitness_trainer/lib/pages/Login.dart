@@ -162,8 +162,8 @@ class Login extends StatelessWidget {
                       ),
                     ),
                     onPressed: () async {
-                       loginUser(emailController.text,passwordController.text,context,listtoken,spe);
 
+                       loginUser(emailController.text,passwordController.text,context,listtoken,spe);
                     },
                   ),
                   const SizedBox(height: 22),
@@ -184,7 +184,7 @@ class Login extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        "or continue with",
+                        "or",
                         style: TextStyle(
                           color: Color(int.parse(White)),
                           fontSize: 15,
@@ -208,8 +208,7 @@ class Login extends StatelessWidget {
                   Padding(
                     padding: const EdgeInsets.only(left: 20, right: 20),
                     child: Container(
-                      color: Colors.black,
-                      margin: EdgeInsets.only(top: 5, left: 20, right: 20, bottom: 5),
+                      margin: EdgeInsets.only(top: 5, left: 70, right: 10, bottom: 5),
                       padding: EdgeInsets.only(top: 10, bottom: 10, left: 20, right: 50),
                       child: InkWell(
                         onTap: () {
@@ -223,7 +222,7 @@ class Login extends StatelessWidget {
                             "Continue with Google",
                             style: TextStyle(
                               color: Color(int.parse(White)),
-                              fontSize: 14,
+                              fontSize: 15,
                             ),
                           ),
                           leading: CircleAvatar(
@@ -235,7 +234,7 @@ class Login extends StatelessWidget {
                       ),
                     ),
                   ),
-                  const SizedBox(height: 15),
+                  const SizedBox(height: 60),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [

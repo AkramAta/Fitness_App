@@ -1,5 +1,4 @@
 import 'dart:async';
-
 import 'package:finalproject/Component/Title.dart';
 import 'package:finalproject/pages/Welcome%20Screen.dart';
 import 'package:flutter/material.dart';

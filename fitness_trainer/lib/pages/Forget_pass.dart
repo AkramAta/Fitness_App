@@ -1,15 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_otp/email_otp.dart';
-import 'package:finalproject/Component/Alert_Dialog.dart';
 import 'package:finalproject/Component/Button.dart';
 import 'package:finalproject/Component/SizedBox_for%20Gapping.dart';
-import 'package:finalproject/Component/Snack_Bar.dart';
 import 'package:finalproject/Component/Title.dart';
-import 'package:finalproject/pages/OTPscreen.dart';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import '../Component/Colors.dart';
-
+import '../Component/awesome_dialog.dart';
+import 'otp code.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   @override
@@ -38,10 +36,10 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
             return doc.id;
           }
         }
-        snacka(context,'No there is user found with the provided email');
+        print('No document found with the provided email');
         return null;
       } else {
-        snacka(context,'No there is user found in the collection');
+        print('No documents found in the collection');
         return null;
       }
     } catch (e) {
@@ -115,7 +113,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                 Sized_Gap(Height: 20),
                 titles(
                   txt:
-                      'Select which contact details should we use to reset your password',
+                  'Select which contact details should we use to reset your password',
                   txt_color: Color(int.parse(White)),
                   Font_size: 20,
                   text_Align: TextAlign.left,
@@ -136,7 +134,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                     suffixIconColor: Color(int.parse(White)),
                     focusedBorder: OutlineInputBorder(
                         borderSide:
-                            BorderSide(color: Color(int.parse(Purple)))),
+                        BorderSide(color: Color(int.parse(Purple)))),
                     hintText: 'example@example.com',
                     border: OutlineInputBorder(),
                   ),

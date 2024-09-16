@@ -1,11 +1,8 @@
-
-
-
-
 import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:email_otp/email_otp.dart';
 import 'package:finalproject/Component/Snack_Bar.dart';
+import 'package:finalproject/pages/Login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -38,7 +35,7 @@ class OtpCubit extends Cubit<OtpState> {
     print("Verifying OTP: $userOtp");
     try {
       // Using "1234" as a mock OTP for testing
-      bool verified = await EmailOTP.verifyOTP(otp: userOtp );
+      bool verified = await EmailOTP.verifyOTP(otp: userOtp);
       if (verified) {
         print("OTP Verified");
         emit(OtpVerified()); // OTP is verified
@@ -64,56 +61,15 @@ class OtpCubit extends Cubit<OtpState> {
     return super.close();
   }
 
-
-
-
-
   // Function to reauthenticate and change the password
-  Future<void> reauthenticateAndChangePassword({
-    required String email,
-    required String oldPassword,
-    required String newPassword,
-    required dynamic userdic,
-    required BuildContext context,
-  }) async {
-    User? user = FirebaseAuth.instance.currentUser;
-
-    if (user != null) {
-      try {
-        // Re-authenticate with the user's email and the old password
-        AuthCredential credential = EmailAuthProvider.credential(
-          email: email,
-          password: oldPassword,
-        );
-
-        await user.reauthenticateWithCredential(credential);
-        print("User re-authenticated");
-
-        // Now update the password
-        await user.updatePassword(newPassword);
-        print("Password updated successfully");
-
-        // Now update the password in Firestore as well
-        DocumentReference userDoc = FirebaseFirestore.instance.collection('users').doc(userdic);
-        await userDoc.update({
-          'password': newPassword,
-        });
-
-        snacka(context, 'Password updated successfully in Firestore.');
-      } catch (e) {
-        snacka(context, "Failed to update Your password");
-      }
-    } else {
-      snacka(context, "No user is signed in");
-    }
-  }
-
-
 
 
   void toggleVisibility2() {
-    
-       obscureText2 = !obscureText2;
-      emit(OtpPasswordChange());
+    obscureText2 = !obscureText2;
+    emit(OtpPasswordChange());
   }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0c7733ad9c80b51a50494444ebfb18926c7876e4

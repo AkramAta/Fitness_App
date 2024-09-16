@@ -13,7 +13,9 @@ import '../Component/Title.dart';
 
 class GoalScreen extends StatefulWidget {
   final String userid;
+
   GoalScreen({required this.userid});
+
   @override
   State<GoalScreen> createState() => _GoalScreenState();
 }
@@ -21,9 +23,8 @@ class GoalScreen extends StatefulWidget {
 class _GoalScreenState extends State<GoalScreen> {
   late List<String> paragraphs;
   late List<String> goalsTargets;
- 
   late String containerBorderColor;
-late int i ;
+
   @override
   void initState() {
     super.initState();
@@ -66,9 +67,11 @@ late int i ;
                     padding: EdgeInsets.only(left: 10, right: 10),
                     itemCount: goalsTargets.length,
                     itemBuilder: (context, index) {
-                      i =index;
                       // Determine border color based on the checkbox state
-                      String BorderColor = BlocProvider.of<UserCubit>(context).isCheckedList[index] ? Purple : White;
+                      String BorderColor = BlocProvider.of<UserCubit>(context)
+                              .isCheckedList[index]
+                          ? Purple
+                          : White;
                       return buildContainerWithBorder(
                         Margin_top_and_bottom: 15,
                         borderWidth: 1,
@@ -80,18 +83,13 @@ late int i ;
                               Font_size: 25,
                               text_Align: TextAlign.left),
                           value: BlocProvider.of<UserCubit>(context).isCheckedList[index],
-                      
                           onChanged: (bool? value) {
                             BlocProvider.of<UserCubit>(context).updateCheckbox(index, value!);
                             print(BlocProvider.of<UserCubit>(context).isCheckedList);
-                            BlocProvider.of<UserCubit>(context).updateGoalTarget(goalsTargets[index],widget.userid);
-                            
+                            BlocProvider.of<UserCubit>(context).updateGoalTargetusercubit(
+                                goalsTargets[index], widget.userid);
+
                             BlocProvider.of<UserCubit>(context).isCheckedList[index] = value;
-                            
-                           
-                           
-                           
-                           
                           },
                         ),
                       );
@@ -115,14 +113,24 @@ late int i ;
                       buttons(
                           text: "Continue",
                           action: () {
-                            BlocProvider.of<UserCubit>(context).updateGoalTarget(goalsTargets[i],widget.userid);
+                            BlocProvider.of<UserCubit>(context)
+                                .updateGoalTarget( BlocProvider.of<UserCubit>(context).goal, widget.userid);
 
+<<<<<<< HEAD
                             Navigator.push(
                               context,
                              MaterialPageRoute(
                                builder: (context) => PhysicalActivity(userid: widget.userid,),
                              ),
                             );
+=======
+                             Navigator.push(
+                             context,
+                               MaterialPageRoute(
+                                   builder: (context) => PhysicalActivity(userid: widget.userid,),
+                                ),
+                             );
+>>>>>>> 0c7733ad9c80b51a50494444ebfb18926c7876e4
                           },
                           Pad_Left_Right: 35,
                           Font_size: 20),
@@ -137,4 +145,7 @@ late int i ;
     );
   }
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 0c7733ad9c80b51a50494444ebfb18926c7876e4
