@@ -6,12 +6,10 @@ import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:finalproject/Component/Title.dart';
 import 'package:finalproject/Constant/Widgets/costumBuildTextField.dart';
 import 'package:finalproject/pages/Home_Screen.dart';
-<<<<<<< HEAD
+
 import 'package:firebase_storage/firebase_storage.dart';
 
-=======
 import 'package:finalproject/pages/Register.dart';
->>>>>>> 0c7733ad9c80b51a50494444ebfb18926c7876e4
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'dart:io';

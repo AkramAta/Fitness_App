@@ -116,21 +116,19 @@ class _GoalScreenState extends State<GoalScreen> {
                             BlocProvider.of<UserCubit>(context)
                                 .updateGoalTarget( BlocProvider.of<UserCubit>(context).goal, widget.userid);
 
-<<<<<<< HEAD
                             Navigator.push(
                               context,
                              MaterialPageRoute(
                                builder: (context) => PhysicalActivity(userid: widget.userid,),
                              ),
                             );
-=======
+
                              Navigator.push(
                              context,
                                MaterialPageRoute(
                                    builder: (context) => PhysicalActivity(userid: widget.userid,),
                                 ),
                              );
->>>>>>> 0c7733ad9c80b51a50494444ebfb18926c7876e4
                           },
                           Pad_Left_Right: 35,
                           Font_size: 20),
@@ -145,7 +143,3 @@ class _GoalScreenState extends State<GoalScreen> {
     );
   }
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 0c7733ad9c80b51a50494444ebfb18926c7876e4
