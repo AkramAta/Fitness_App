@@ -6,7 +6,7 @@ import 'package:finalproject/Component/Paragraphs.dart';
 import 'package:finalproject/Component/Title.dart';
 import 'package:finalproject/Constant/Widgets/costumBuildTextField.dart';
 import 'package:finalproject/pages/Home_Screen.dart';
-
+import 'package:finalproject/pages/Register.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 

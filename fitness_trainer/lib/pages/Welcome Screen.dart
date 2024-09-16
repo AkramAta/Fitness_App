@@ -98,8 +98,10 @@ class WelcomeScreen extends StatelessWidget {
                         text:
                             "We're thrilled to have you here. Go Fit is designed to help you Track workouts, monitor progress, motivate."))
               ],
-            )),
-      ]),
+            )
+        ),
+      ]
+      ),
     );
   }
 }
