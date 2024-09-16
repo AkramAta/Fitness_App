@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "725951205869",
+    "project_id": "fitnesstrainerapp-d1251",
+    "storage_bucket": "fitnesstrainerapp-d1251.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725951205869:android:d22c70bacd8778f2f997e4",
+        "android_client_info": {
+          "package_name": "com.example.fitness_trainer"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC9JJ_XE-t79k69QkTUCNTipiMG_0oRepA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

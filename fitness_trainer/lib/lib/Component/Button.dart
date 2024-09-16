@@ -6,7 +6,7 @@ Widget buttons({
   required String text,
   required Function() action,
   Color colour = const Color(0xff6C63FF),
-  double Font_size = 30,
+  double Font_size = 25,
   double Pad_Left_Right = 30,
   double Pad_Top_Bottom = 15,
 }) {
