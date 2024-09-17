@@ -8,7 +8,7 @@ import '../Component/Colors.dart';
 import '../Component/buid_container.dart';
 import '../Component/Title.dart';
 import '../Models/ExercisesData/ExercisesDatabase.dart';
-import 'Exercise_Screen.dart';
+import 'ExerciseDetailScreen.dart';  // Updated import for detail screen
 
 class Discover extends StatefulWidget {
   final String userid;
@@ -277,17 +277,15 @@ class _DiscoverState extends State<Discover> {
         itemCount: List_Data.length,
         itemBuilder: (context, i) {
           String exerciseName = List_Data[i]["name"] ?? "Unknown";
-          String exerciseImage = List_Data[i]["exerciseImage"] ?? "ASssets/Image/default_image.jpeg";
+          String exerciseImage = List_Data[i]["exerciseImage"] ?? "Assets/Image/default_image.jpeg";
 
           return GestureDetector(
             onTap: () {
               Navigator.push(
                 context,
                 MaterialPageRoute(
-                  builder: (context) => ExerciseScreen(
-                    muscleGroup: selectedMuscle,
-                    exercises: ExercisesDatabase[0][selectedLevel]["workout"]
-                        .firstWhere((element) => element.containsKey(selectedMuscle))[selectedMuscle]["exercises"],
+                  builder: (context) => ExerciseDetailScreen(
+                    exercise: List_Data[i], // Pass the entire exercise data here
                   ),
                 ),
               );
@@ -333,27 +331,26 @@ class _DiscoverState extends State<Discover> {
         ),
       ),
       child: Padding(
-  padding: const EdgeInsets.all(10), // Corrected here
-  child: Column(
-    mainAxisAlignment: MainAxisAlignment.end,
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      titles(txt: exerciseName.toUpperCase(), Font_size: 25),
-      IconButton(
-        onPressed: () {
-          toggleExerciseBookmark(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName));
-        },
-        icon: FaIcon(
-          isExerciseBookmarked(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName))
-              ? FontAwesomeIcons.solidBookmark
-              : FontAwesomeIcons.bookmark,
-          color: Color(int.parse(White)),
+        padding: const EdgeInsets.all(10),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            titles(txt: exerciseName.toUpperCase(), Font_size: 25),
+            IconButton(
+              onPressed: () {
+                toggleExerciseBookmark(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName));
+              },
+              icon: FaIcon(
+                isExerciseBookmarked(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName))
+                    ? FontAwesomeIcons.solidBookmark
+                    : FontAwesomeIcons.bookmark,
+                color: Color(int.parse(White)),
+              ),
+            ),
+          ],
         ),
       ),
-    ],
-  ),
-),
-
     );
   }
 }
