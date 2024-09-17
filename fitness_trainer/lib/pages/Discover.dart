@@ -1,4 +1,3 @@
-
 import 'package:finalproject/Component/Build_ContainerWith_Border.dart';
 import 'package:finalproject/Component/Build_Container_%20with_Fixed_width_hieght.dart';
 import 'package:finalproject/Component/Button.dart';
@@ -66,14 +65,14 @@ class _DiscoverState extends State<Discover> {
 
         if (muscleGroupData.isNotEmpty && muscleGroupData[muscleGroup] != null) {
           var exercises = muscleGroupData[muscleGroup]['exercises'] as List<dynamic>;
-          String muscleImage = muscleGroupData[muscleGroup]['image'] ?? "assets/Image/default_image.jpeg";
+          String muscleImage = muscleGroupData[muscleGroup]['image'] ?? "Assets/Image/default_image.jpeg";
 
           for (var exercise in exercises) {
             List_Data.add({
               "name": exercise['name'] ?? "Unknown Exercise",
               "instructions": exercise['instructions'] ?? "No instructions",
               "equipment": exercise['equipment'] ?? "No equipment",
-              "exerciseImage": exercise['image'] ?? "assets/Image/default_image.jpeg",
+              "exerciseImage": exercise['image'] ?? "Assets/Image/default_image.jpeg",
               "muscleImage": muscleImage,
             });
           }
@@ -145,8 +144,8 @@ class _DiscoverState extends State<Discover> {
         itemCount: List_Data.length,
         itemBuilder: (context, index) {
           String exerciseName = List_Data[index]["name"] ?? "Unknown";
-          String exerciseImage = List_Data[index]["exerciseImage"] ?? "assets/Image/default_image.jpeg";
-          String muscleImage = List_Data[index]["muscleImage"] ?? "assets/Image/default_image.jpeg";
+          String exerciseImage = List_Data[index]["exerciseImage"] ?? "Assets/Image/default_image.jpeg";
+          String muscleImage = List_Data[index]["muscleImage"] ?? "Assets/Image/default_image.jpeg";
 
           return Row(
             children: [
@@ -278,7 +277,7 @@ class _DiscoverState extends State<Discover> {
         itemCount: List_Data.length,
         itemBuilder: (context, i) {
           String exerciseName = List_Data[i]["name"] ?? "Unknown";
-          String exerciseImage = List_Data[i]["exerciseImage"] ?? "assets/Image/default_image.jpeg";
+          String exerciseImage = List_Data[i]["exerciseImage"] ?? "ASssets/Image/default_image.jpeg";
 
           return GestureDetector(
             onTap: () {
@@ -334,26 +333,27 @@ class _DiscoverState extends State<Discover> {
         ),
       ),
       child: Padding(
-        padding: const EdgeInsets.all(10),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            titles(txt: exerciseName.toUpperCase(), Font_size: 25),
-            IconButton(
-              onPressed: () {
-                toggleExerciseBookmark(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName));
-              },
-              icon: FaIcon(
-                isExerciseBookmarked(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName))
-                    ? FontAwesomeIcons.solidBookmark
-                    : FontAwesomeIcons.bookmark,
-                color: Color(int.parse(White)),
-              ),
-            ),
-          ],
+  padding: const EdgeInsets.all(10), // Corrected here
+  child: Column(
+    mainAxisAlignment: MainAxisAlignment.end,
+    crossAxisAlignment: CrossAxisAlignment.start,
+    children: [
+      titles(txt: exerciseName.toUpperCase(), Font_size: 25),
+      IconButton(
+        onPressed: () {
+          toggleExerciseBookmark(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName));
+        },
+        icon: FaIcon(
+          isExerciseBookmarked(List_Data.firstWhere((exercise) => exercise['name'] == exerciseName))
+              ? FontAwesomeIcons.solidBookmark
+              : FontAwesomeIcons.bookmark,
+          color: Color(int.parse(White)),
         ),
       ),
+    ],
+  ),
+),
+
     );
   }
 }

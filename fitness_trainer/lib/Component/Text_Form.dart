@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
+
 Widget buildTextFormField({
-   Function Changed(String)?,
-  Function()? Tapped ,
-  required obSecured_text ,
   required TextEditingController controller,
-  required Widget suffixIcon ,
-  required String hintText ,
+  required bool obSecured_text,
+  required Widget suffixIcon,
+  required String hintText,
   required String labelText,
   Color iconColor = Colors.white10,
   Color borderColor = Colors.grey,
@@ -16,28 +15,39 @@ Widget buildTextFormField({
   double fontSize = 20,
   double borderWidth = 1,
   Color labelColor = Colors.white, // Direct Color instead of String
+  void Function(String)? onChanged,
+  void Function()? onTap,
+  FocusNode? focusNode,
 }) {
-  return TextFormField(
-    controller: controller,
-    obscureText: obSecured_text,
-    style: TextStyle(fontSize: fontSize, color: textColor),
-    decoration: InputDecoration(
-      suffixIcon: suffixIcon,
-      suffixIconColor: iconColor,
-      filled: true,
-      labelStyle: TextStyle(color: labelColor),
-      fillColor: fillColor,
-      enabledBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: borderWidth, color: borderColor),
+  return Focus(
+    focusNode: focusNode,
+    child: TextFormField(
+      controller: controller,
+      obscureText: obSecured_text,
+      style: TextStyle(fontSize: fontSize, color: textColor),
+      decoration: InputDecoration(
+        suffixIcon: IconButton(
+          icon: suffixIcon,
+          color: focusNode?.hasFocus == true ? Colors.blue : iconColor, // Change icon color based on focus
+          onPressed: () {
+            // Handle icon button press
+          },
+        ),
+        filled: true,
+        labelStyle: TextStyle(color: labelColor),
+        fillColor: fillColor,
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: borderWidth, color: borderColor),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(width: borderWidth, color: focusedBorderColor),
+        ),
+        hintText: hintText,
+        contentPadding: contentPadding,
+        labelText: labelText,
       ),
-      focusedBorder: OutlineInputBorder(
-        borderSide: BorderSide(width: borderWidth, color: focusedBorderColor),
-      ),
-      hintText: hintText,
-      contentPadding: contentPadding,
-      labelText: labelText,
+      onTap: onTap,
+      onChanged: onChanged,
     ),
-    onTap: Tapped,
-    onChanged:Changed
   );
 }

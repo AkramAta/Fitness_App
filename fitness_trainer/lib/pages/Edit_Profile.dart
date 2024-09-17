@@ -54,7 +54,6 @@ class _Edit_ProfileState extends State<Edit_Profile> {
 
   @override
   void dispose() {
-
     nameController.dispose();
     usernameController.dispose();
     genderController.dispose();
@@ -93,8 +92,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
               children: [
                 buildTextFormField(
                   controller: nameController,
-                  Changed: (v) => v,
-                  Tapped: () {},
+                  onChanged: (v) {},
+                  onTap: () {},
                   labelText: "Name",
                   obSecured_text: false,
                   suffixIcon: IconButton(
@@ -113,8 +112,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                 Sized_Gap(Height: 20),
                 buildTextFormField(
                   controller: usernameController,
-                  Changed: (v) => v,
-                  Tapped: () {},
+                  onChanged: (v) {},
+                  onTap: () {},
                   labelText: "Username",
                   obSecured_text: false,
                   suffixIcon: IconButton(
@@ -133,8 +132,8 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                 Sized_Gap(Height: 20),
                 buildTextFormField(
                   controller: gmailController,
-                  Changed: (v) => v,
-                  Tapped: () {},
+                  onChanged: (v) {},
+                  onTap: () {},
                   labelText: "Gmail",
                   obSecured_text: false,
                   suffixIcon: IconButton(
@@ -295,7 +294,9 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                         builder: (context) => Profile_Setting(
                           userdata: widget.userdata,
                           userid: widget.userid,
-                        )));
+                        )
+                    )
+                    );
                   },
                   Pad_Left_Right: 140,
                 ),

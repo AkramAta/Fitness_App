@@ -9,17 +9,17 @@ import '../Component/Button.dart';
 class Signin extends StatelessWidget {
   late List logos = [
     {
-      "img": "Assets/Image/Facebook.png",
+      "img": "assets/Image/Facebook.png",
       "message": "Continue with Facebook",
       "Delay": 250
     },
     {
-      "img": "Assets/Image/Google.png",
+      "img": "assets/Image/Google.png",
       "message": "Continue with Google",
       "Delay": 500
     },
     {
-      "img": "Assets/Image/Apple.png",
+      "img": "assets/Image/Apple.png",
       "message": "Continue with Apple",
       "Delay": 750
     }

@@ -1,14 +1,41 @@
 import "package:finalproject/Component/buid_container.dart";
 import "package:flutter/material.dart";
 import "package:font_awesome_flutter/font_awesome_flutter.dart";
+import "package:shared_preferences/shared_preferences.dart"; // Import shared_preferences
 import "../Component/Colors.dart";
-import "../Component/Paragraphs.dart";
 import "../Component/Title.dart";
 
-class My_Bookmark extends StatelessWidget {
+class My_Bookmark extends StatefulWidget {
   final List<Map> bookmarkedExercises; // Dynamic data passed from Home_Screen
 
   My_Bookmark({required this.bookmarkedExercises}); // Constructor
+
+  @override
+  _My_BookmarkState createState() => _My_BookmarkState();
+}
+
+class _My_BookmarkState extends State<My_Bookmark> {
+  late List<Map> bookmarkedExercises;
+
+  @override
+  void initState() {
+    super.initState();
+    bookmarkedExercises = widget.bookmarkedExercises; // Initialize the list with passed data
+  }
+
+  // Method to remove a bookmark
+  Future<void> _removeBookmark(Map exercise) async {
+    setState(() {
+      bookmarkedExercises.removeWhere((item) => item['name'] == exercise['name']); // Remove the bookmark from the list
+    });
+
+    // Update shared preferences
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    List<String> updatedBookmarks = bookmarkedExercises
+        .map((exercise) => exercise['name'].toString())
+        .toList(); // Convert to a list of names
+    await prefs.setStringList('bookmarkedExercises', updatedBookmarks);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -105,11 +132,6 @@ class My_Bookmark extends StatelessWidget {
                                 Font_size: 14,
                                 text_Align: TextAlign.start,
                               ),
-                              subtitle: paragraph(
-                                text: bookmarkedExercises[i]["instructions"], // Use "instructions" or other available fields
-                                Font_size: 12,
-                                TextAlign: TextAlign.start,
-                              ),
                               trailing: IconButton(
                                 onPressed: () {
                                   // Optionally handle removing the bookmark
@@ -167,12 +189,6 @@ class My_Bookmark extends StatelessWidget {
                                                         text_Align: TextAlign.start,
                                                         txt_color: Color(int.parse(White)),
                                                       ),
-                                                      paragraph(
-                                                        text: bookmarkedExercises[i]["instructions"], // Use "instructions"
-                                                        Font_size: 12,
-                                                        TextAlign: TextAlign.start,
-                                                        color: Colors.white,
-                                                      ),
                                                     ],
                                                   ),
                                                 ),
@@ -201,7 +217,7 @@ class My_Bookmark extends StatelessWidget {
                                               ),
                                               TextButton(
                                                 onPressed: () {
-                                                  // Add your logic for removing the bookmark here
+                                                  _removeBookmark(bookmarkedExercises[i]); // Remove the bookmark
                                                   Navigator.of(context).pop(); // Close the dialog
                                                 },
                                                 style: TextButton.styleFrom(

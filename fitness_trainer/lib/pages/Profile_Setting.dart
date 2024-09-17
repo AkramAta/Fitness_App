@@ -9,6 +9,7 @@ import '../Component/Title.dart';
 import 'Edit_Profile.dart';
 import 'Notification_Settings.dart';
 import 'Notification_page.dart';
+import 'Security.dart';
 class Profile_Setting extends StatefulWidget {
   final String userid;
   final Map <String, dynamic> userdata;
@@ -168,11 +169,17 @@ class _Profile_SettingState extends State<Profile_Setting> {
                   {
                     print(widget.userdata);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => Edit_Profile(userid: widget.userid,userdata:widget.userdata,)));
-                  } if(Data_LIstTiles[i]["title"] == "Notifications")
+                  } else if(Data_LIstTiles[i]["title"] == "Notifications")
                   {
                     print(widget.userdata);
                     Navigator.push(context, MaterialPageRoute(builder: (context) => NotificationSettings()));
-                  }
+                  }else if(Data_LIstTiles[i]["title"] == "Security")
+                    {
+                      print(widget.userdata);
+                      Navigator.push(context, MaterialPageRoute(builder: (context) => Security_Settings(userid: widget.userid,data: widget.userdata,)));
+
+
+                    }
                 },
                 contentPadding: EdgeInsets.all(0),
                 leading: IconButton(
