@@ -146,7 +146,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                     return null;
                   },
                 ),
-                Sized_Gap(Height: 150),
+                Sized_Gap(Height: 100),
                 buttons(
                   action: () async {
                     docid =
@@ -154,7 +154,7 @@ class _ForgotPasswordScreen extends State<ForgotPasswordScreen> {
                     emailController.clear();
                   },
                   Pad_Top_Bottom: 10,
-                  Pad_Left_Right: 155,
+                  Pad_Left_Right: 125,
                   text: "Continue",
                 ),
               ],

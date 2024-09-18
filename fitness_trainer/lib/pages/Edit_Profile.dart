@@ -234,7 +234,7 @@ class _Edit_ProfileState extends State<Edit_Profile> {
                     },
                   ),
                 ),
-                Sized_Gap(Height: 130),
+                Sized_Gap(Height: 100),
                 buttons(
                   text: "Verify",
                   action: () {

@@ -6,7 +6,7 @@ import 'package:finalproject/pages/Goal_Screen.dart';
 import 'package:finalproject/pages/Home_Screen.dart';
 import 'package:finalproject/pages/Login.dart';
 
-import 'package:finalproject/pages/OTPscreen.dart';
+
 import 'package:finalproject/pages/Physical_activity.dart';
 import 'package:finalproject/pages/Register.dart';
 import 'package:finalproject/pages/Splash_screen.dart';

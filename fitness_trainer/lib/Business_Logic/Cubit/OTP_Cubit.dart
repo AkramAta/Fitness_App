@@ -15,7 +15,7 @@ class OtpCubit extends Cubit<OtpState> {
   OtpCubit() : super(OtpInitial());
 
   int counter = 60;
-  late Timer _timer;
+  late Timer _timer = Timer(Duration(seconds: 0), () {});
   late bool obscureText2 = true;
 
   // Start countdown timer

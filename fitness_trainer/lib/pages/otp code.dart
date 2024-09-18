@@ -190,12 +190,13 @@ class _OtpState extends State<Otp> {
             Spacer(),
             buttons(
               text: "Verify",
+              Font_size: 20,
               action: () async {
                 userotp = num1.text + num2.text + num3.text + num4.text;
                 await checkOTP(userotp);
                 userotp = "";
               },
-              Pad_Left_Right: 141,
+              Pad_Left_Right: 110,
             ),
           ],
         ),

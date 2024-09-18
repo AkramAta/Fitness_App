@@ -99,7 +99,7 @@ class _Security_Settings extends State<Security_Settings> {
                 padding: EdgeInsets.all(20),
                 child: buttons(
                     text: "Change Password",
-                    Pad_Left_Right: 60,
+                    Pad_Left_Right: 40,
                     colour: Color(int.parse(Grayish)),
                     action: () {
                       Navigator.push(
